@@ -1,0 +1,357 @@
+{%extends 'base.html'%}
+
+{% load  static%}
+{% block content%}
+  <style>
+    .user-profile .pro-avatar {
+    position: absolute;
+
+    bottom: 20px;
+    left: 20px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 50%;
+    padding: 5px;
+}
+.user-profile .pro-avatar img{
+    height:200px;
+    width:100%;
+    border-radius: 50%;
+
+}
+  </style>
+  <!-- Content -->
+  <div id="content">
+
+    <!-- Papular Companies -->
+    <section class="padding-bottom-100">
+      <div class="compny-profile user-profile">
+        <!-- SUB Banner -->
+        <div class="profile-bnr">
+          <div class="container">
+
+            <!-- User Iinfo -->
+            <div class="user-info">
+              <div class="">
+                <div class="user-in container">
+                  <div class="pro-avatar "> <img src="{{ profile.image.url }}" alt="profile image" class="img-responsive  " > </div>
+                  <h1>{{profile.name}} <a class="veri" href="professional-details.html#." data-toggle="tooltip" data-placement="top" title="Verified Member"> <i class="fa fa-check"></i> </a> </h1>
+                  <h6>Professional Designer and Front-end developer</h6>
+                  <div class="social-links">
+                    {% if profile.facebook_url%}
+                    <a href="{{profile.facebook_url}}"><i class="fab fa-facebook-f"></i></a>
+                    {%endif%}
+                    {% if profile.twitter_url%}
+                    <a href="{{profile.twitter_url}}"><i class="fab fa-twitter"></i></a>
+                    {%endif%}
+                    {% if profile.google_url%}
+                    <a href="{{profile.google_url}}"><i class="fab fa-google"></i></a>
+                    {%endif%}
+                    {% if profile.linkdin_url%}
+                    <a href="{{profile.linkdin_url}}"><i class="fab fa-linkedin-in"></i></a>
+                    {%endif%}
+
+<!--                    <a href="professional-details.html#."><i class="far fa-bookmark"></i> </a>-->
+
+                    {% if profile.email%}
+                    <a href="{% url profile.email}}"><i class="far fa-envelope"></i> </a>
+                    {%endif%}
+
+                    <a href="professional-details.html#." class="float-right margin-right-0" data-toggle="tooltip" data-placement="top" title="Reports"><i class="fa fa-exclamation"></i> </a> </div>
+
+                  <!-- Followers -->
+                  <div class="followr">
+                    <ul class="row">
+                      <li class="col-sm-6">
+                        <p>Followers <span>(512)</span></p>
+                      </li>
+                      <li class="col-sm-6">
+                        <p>Following <span>(1874)</span></p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          Muhammad
+          <!-- Modal POPUP -->
+          <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <h6><a class="close" href="professional-details.html#." data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a> Send Message</h6>
+                <!-- Forms -->
+                <form action="#">
+                  <ul class="row">
+                    <li class="col-md-6">
+                      <input type="text" placeholder="First Name" class="form-control">
+                    </li>
+                    <li class="col-md-6">
+                      <input type="text" placeholder="Last Name" class="form-control">
+                    </li>
+                    <li class="col-md-6">
+                      <input type="text" placeholder="Country" class="form-control">
+                    </li>
+                    <li class="col-md-6">
+                      <input type="text" placeholder="Email" class="form-control">
+                    </li>
+                    <li class="col-md-12">
+                      <textarea placeholder="Your Message" class="form-control"></textarea>
+                    </li>
+                    <li class="col-md-12 text-center">
+                      <button class="btn">Send message</button>
+                    </li>
+                  </ul>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Company Content -->
+        <div class="profile-company-content main-user">
+          <div class="container">
+
+            <!-- Nav Tabs -->
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li><a class="nav-link active" data-toggle="tab" href="professional-details.html#contact" role="tab" aria-selected="true">Update Profile</a> </li>
+            </ul>
+            <div class="row">
+              <!-- SIDE BAR -->
+              <div class="col-lg-4">
+
+                <!-- Company Information -->
+                <div class="sidebar">
+
+                  <!-- Heading for mobile Collapse -->
+                  <h5 class="main-title margin-bottom-30">User Information</h5>
+                  <div class="navbar-expand-lg">
+                    <!-- Heading for mobile Collapse -->
+                    <a class="collapsed main-title fr-mob" data-toggle="collapse" data-target="#cmpny-info" aria-expanded="false"> User Information </a>
+                    <div class="collapse navbar-collapse" id="cmpny-info">
+                      <div class="side-bar-indide">
+
+                        <!-- Company Information -->
+                        <div class="sidebar-information">
+                          <ul class="single-category">
+                            {% if profile.name%}
+                            <li>
+                              <h6 class="title">Name</h6>
+                              <span class="subtitle">{{profile.name}}</span> </li>
+                            <li>
+                              {%endif%}
+                              {% if profile.name%}
+                              <h6 class="title">Age</h6>
+                              <span class="subtitle">{{profile.name}}</span> </li>{%endif%}
+                            {% if profile.name%}
+                            <li>
+                              <h6 class="title">Location</h6>
+                              <span class="subtitle">{{profile.location}}</span> </li>{%endif%}
+                            {% if profile.experiance%}
+                            <li>
+                              <h6 class="title">Experiance</h6>
+                              <span class="subtitle">{{profile.experiance}}</span> </li>{%endif%}
+                            {% if profile.degree%}
+                            <li>
+                              <h6 class="title">Degree</h6>
+                              <span class="subtitle">{{profile.degree}}</span> </li>{%endif%}
+
+                            {% if profile.number%}
+                            <li>
+                              <h6 class="title">Phone</h6>
+                              <span class="subtitle">{{profile.number}}</span> </li>{%endif%}
+
+                            {% if profile.profile_title%}
+                            <li>
+                              <h6 class="title">Email</h6>
+                              <div class="subtitle"><a href="professional-details.html#.">{{profile.profile_title}}</a> </div>
+                            </li>{%endif%}
+
+                            {% if profile.website%}
+                            <li>
+                              <h6 class="title">Website</h6>
+                              <div class="subtitle"> <a href="" target="_blank">{{profile.website}}</a> </div>
+                            </li>{%endif%}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Company Rating -->
+                <div class="sidebar">
+                  <h5 class="main-title margin-bottom-20">Rating</h5>
+                  <div class="navbar-expand-lg">
+                    <!-- Heading for mobile Collapse -->
+                    <a class="collapsed main-title fr-mob" data-toggle="collapse" data-target="#cmpny-rtng" aria-expanded="false"> Rating </a>
+                    <div class="collapse navbar-collapse" id="cmpny-rtng">
+                      <div class="side-bar-indide">
+                        <div class="sidebar-information">
+                          <ul class="single-category com-rate">
+                            <li>
+                              <h6 class="title">Expertise:</h6>
+                              <span class="subtitle"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half-alt"></i> </span> </li>
+                            <li>
+                              <h6 class="title">Knowledge:</h6>
+                              <span class="subtitle"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i> <i class="far fa-star"></i> <i class="far fa-star"></i> </span> </li>
+                            <li>
+                              <h6 class="title">Quality:</h6>
+                              <span class="subtitle"><i class="fas fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half-alt"></i> </span> </li>
+                            <li>
+                              <h6 class="title">Price:</h6>
+                              <span class="subtitle"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i> <i class="far fa-star"></i> </span> </li>
+                            <li>
+                              <h6 class="title">Services:</h6>
+                              <span class="subtitle"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i> </span> </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tab Content -->
+              <div class="col-lg-8">
+                <div class="tab-content">
+
+
+
+                  <!-- Contact -->
+                  <div id="contact" class="tab-pane active">
+                    <div class="profile-main">
+                      <h3>Welcome {{profile.name}} !!!</h3>
+                      <div class="profile-in">
+                        <p>Hi! Upadate your profile to get more views...</p>
+                        <form action="" method="post" class="contact-company">
+                          {% csrf_token %}
+                          <ul class="row">
+                            <li class="col-sm-4">
+                            <label>Name :
+                          {{form.name}}
+                        </label></li>
+                             <li class="col-sm-4">
+                            <label>Email :
+                          {{form.email}}
+                        </label></li>
+                            <li class="col-sm-4">
+                            <label>Number :
+                          {{form.number}}
+                        </label></li>
+                            <li class="col-sm-12">
+                            <label>Title :
+                          {{form.profile_title}}
+                        </label></li>
+                            <li class="col-sm-4">
+                            <label>DOB :
+                          {{form.dob}}
+                        </label></li>
+                            <li class="col-sm-4">
+                            <label>location :
+                          {{form.location}}
+                        </label></li>
+
+                               <li class="col-sm-4">
+                            <label>Degree :
+                          {{form.degree}}
+                        </label></li>   <li class="col-sm-4">
+                            <label>Website :
+                          {{form.website}}
+                        </label></li>
+                               <li class="col-sm-4">
+                            <label>Experiance :
+                          {{form.experiance}}
+                        </label></li>
+
+                            <li class="col-sm-4">
+                             <label>Company :
+                          {{form.company}}
+                        </label></li>
+                             <li class="col-sm-12 text-center ">
+                             <label>about :
+                          {{form.about}}
+                        </label></li>
+
+
+
+
+
+
+
+                          <button class="btn col-sm-4 text-center mt-3" type="submit">Update</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT OUR USERS SAY -->
+    <section class="bg-white padding-top-100 padding-bottom-100">
+      <div class="container">
+
+        <!-- Heading Block -->
+        <div class="heading-block text-center">
+          <h2>Review About {{profile.name}}</h2>
+        </div>
+
+        <!-- Testimonial Style 4 -->
+        <div class="testimonial style-4">
+          <div class="testi">
+            <!-- Testi Slides With Image -->
+            <div class="testi-slide">
+
+              <!-- Slides -->
+              <div>
+                <!-- Avatar -->
+                <div class="avatar"><img class="img-circle img-responsive" src="{% static 'images/testimonial-2a.png' %}" alt=" "></div>
+                <div class="text-in">
+                  <p>“There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour,
+                    or randomised words which don't look even slightly believable.” </p>
+                  <h6>WHITE SHADOW WALKER</h6>
+                  <span> CEO/FOUNDER DELL</span>
+                  <!-- Stars -->
+                  <div class="rating-stars"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i></div>
+                </div>
+              </div>
+
+              <!-- Slides -->
+              <div>
+                <!-- Avatar -->
+                <div class="avatar"><img class="img-circle img-responsive" src="{% static 'images/testimonial-2b.png' %}" alt=" "></div>
+                <div class="text-in">
+                  <p>“There are many variations  but the majority have suffered alteration. but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.”</p>
+                  <h6>M_ADNAN</h6>
+                  <span> CEO/FOUNDER DELL</span>
+                  <!-- Stars -->
+                  <div class="rating-stars"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i></div>
+                </div>
+              </div>
+
+              <!-- Slides 1 -->
+              <div>
+                <!-- Avatar -->
+                <div class="avatar"><img class="img-circle img-responsive" src="{% static 'images/testimonial-2c.png' %}" alt=" "></div>
+                <div class="text-in">
+                  <p>“There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, Alteration in some form randomised words which don't look even slightly believable.”</p>
+                  <h6>DAVID WALKER</h6>
+                  <span> CEO/FOUNDER DELL</span>
+                  <!-- Stars -->
+                  <div class="rating-stars"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+{% endblock %}

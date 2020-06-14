@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>{% load static %}
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="M_Adnan">
+<title>Social Networking Site</title>
+
+<!-- Bootstrap Core CSS -->
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
+<link href="{% static 'fonts/flaticon.css' %}" rel="stylesheet">
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+
+<!-- fontawesome  -->
+<link href="{% static 'css/all.min.css' %}" rel="stylesheet">
+
+
+<!-- JavaScripts -->
+<script src="{% static 'js/modernizr.js' %}"></script>
+
+<!-- Online Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+
+<!-- Wrap -->
+<div id="wrap">
+
+  <!-- header -->
+  <header class="sticky">
+    <div class="container">
+
+      <!-- Logo -->
+      <div class="logo"> <a href="index.html"><img class="img-responsive" src="{% static 'images/logo-dark.png' %}" alt="" ></a> </div>
+      <nav class="navbar ownmenu navbar-expand-lg" id="nav-resposive">
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+        <div class="collapse navbar-collapse" id="navbarNav" data-parent="#nav-resposive">
+          <ul class="nav">
+            <li class="active"> <a href="">Home</a> </li>
+            <li class=""> <a href="">Connections</a> </li>
+            <li class=""> <a href="">Companies</a> </li>
+            <li class=""> <a href="">Jobs</a> </li>
+
+<!--            <li> <a href="companies.html">Companies</a> </li>-->
+<!--            <li> <a href="pricing.html">Pricing </a> </li>-->
+            <!-- Two Link Option -->
+
+            <li> <a href="contact.html"> Contact</a> </li>
+          </ul>
+        </div>
+
+        <!-- Nav Right -->
+        <div class="nav-right">
+          <button class="social-toggler collapsed" type="button" data-toggle="collapse" data-target="#socialNav" aria-controls="socialNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="fa fa-share-alt"></span> </button>
+          <div class="collapse navbar-collapse navbar-expand-lg" id="socialNav" data-parent="#nav-resposive">
+            <div class="social_icons">
+              <ul>
+                <li><a href="login-register.html#."><i class="fab fa-whatsapp"></i></a></li>
+                <li><a href="login-register.html#."><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="login-register.html#."><i class="fab fa-twitter"></i></a></li>
+                <li><a href="login-register.html#."><i class="fab fa-google-plus-g"></i></a></li>
+                <li><a href="login-register.html#."><i class="fab fa-linkedin-in"></i></a></li>
+                {%if request.user.is_authenticated%}
+                <li><a href="{% url 'logoutpage' %}"><i data-toggle="tooltip" title="Logout" class="fa fa-lock-open"></i></a></li>
+                {%endif%}
+<!--                <li><a href="{% url 'logoutpage' %}"><img height="27px" data-toggle="tooltip" title="Logout" src="https://image.shutterstock.com/image-vector/unlock-icon-trendy-flat-style-260nw-734498917.jpg" ></img></a></li>-->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="clearfix"></div>
+  </header>
+  {% block content%}
+    {%endblock%}
+  <!-- Footer -->
+  <footer id="footer">
+    <div class="footer-wrapper">
+
+      <!-- Footer Top -->
+      <div class="footer-top">
+        <div class="footer-top-wrapper">
+          <div class="container">
+            <div class="row">
+              <!-- About Block -->
+              <div class="col-md-4">
+                <div class="block block-companies">
+                  <h3 class="block-title">Latest Companies</h3>
+                  <div class="block-content">
+                    <ul>
+                      <li> <a href="login-register.html#."> <img src="{% static 'images/company-img-1.jpg' %}" alt="" class="img-responsive"> Webicode</a></li>
+                      <li> <a href="login-register.html#."> <img src="{% static 'images/company-img-2.jpg' %}" alt="" class="img-responsive"> Webicode</a></li>
+                      <li> <a href="login-register.html#."> <img src="{% static 'images/company-img-3.jpg' %}" alt="" class="img-responsive"> Webicode</a></li>
+                      <li> <a href="login-register.html#."> <img src="{% static 'images/company-img-4.jpg' %}" alt="" class="img-responsive"> Webicode</a></li>
+                      <li> <a href="login-register.html#."> <img src="{% static 'images/company-img-5.jpg' %}" alt="" class="img-responsive"> Webicode</a></li>
+                      <li> <a href="login-register.html#."> <img src="{% static 'images/company-img-6.jpg' %}" alt="" class="img-responsive"> Webicode</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Footer Links Block -->
+              <div class="col-md-4">
+                <div class="block block-links">
+                  <h3 class="block-title"><span>Usefull Links</span></h3>
+                  <div class="block-content">
+                    <ul>
+                      <li><a href="login-register.html#.">Theme Features</a></li>
+                      <li><a href="login-register.html#.">Page Builder</a></li>
+                      <li><a href="login-register.html#.">Privacy Policy</a></li>
+                      <li><a href="login-register.html#.">Shop Rules</a></li>
+                      <li><a href="login-register.html#.">Services</a></li>
+                      <li><a href="login-register.html#.">Gallery Layout</a></li>
+                      <li><a href="login-register.html#.">Theme Features</a></li>
+                      <li><a href="login-register.html#.">Page Builder</a></li>
+                      <li><a href="login-register.html#.">Privacy Policy</a></li>
+                      <li><a href="login-register.html#.">Shop Rules</a></li>
+                      <li><a href="login-register.html#.">Services</a></li>
+                      <li><a href="login-register.html#.">Gallery Layout</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Twitter Widget Block -->
+              <div class="col-md-4">
+                <div class="block block-twitter-widget">
+                  <h3 class="block-title"><span>Twitter Widget</span></h3>
+                  <div class="block-content">
+                    <div class="twitter-item">
+                      <div class="twitter-content"> Looking for an awesome CREATIVE WordPress Theme? Esquise was updated and optimized to run even better. Find it here: <a href="https://webicode.com/" target="_blank">https://webicode.com/</a> </div>
+                      <div class="twitter-context"> <i class="fa fa-twitter"></i><span class="twitter-date">01 day ago</span> </div>
+                    </div>
+                    <div class="twitter-item">
+                      <div class="twitter-content"> It is a long established fact that a reader will be distracted by the readable . Find it here: <a href="https://webicode.com/" target="_blank">https://webicode.com/</a> </div>
+                      <div class="twitter-context"> <i class="fa fa-twitter"></i><span class="twitter-date">02 days ago</span> </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <div class="footer-bottom-wrapper">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 copyright">
+                <p>&copy; 2019 HTML5 Template. DESIGNED BY <a href="https://webicode.com/"> WEBICODE</a></p>
+              </div>
+              <div class="col-md-6 social-links">
+                <ul class="right">
+                  <li><a href="login-register.html#."><i class="fab fa-facebook"></i></a></li>
+                  <li><a href="login-register.html#."><i class="fab fa-twitter"></i></a></li>
+                  <li><a href="login-register.html#."><i class="fab fa-dribbble"></i></a></li>
+                  <li><a href="login-register.html#."><i class="fab fa-behance"></i></a></li>
+                  <li><a href="login-register.html#."><i class="fab fa-pinterest"></i></a></li>
+                  <li><a href="login-register.html#."><i class="fab fa-google-plus"></i></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Footer Bottom -->
+    </div>
+  </footer>
+  <!-- End Footer -->
+
+</div>
+
+
+
+<script src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/own-menu.js' %}"></script>
+<script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+<script src="{% static 'js/jquery.isotope.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
