@@ -28,3 +28,12 @@ class UserDataBase(models.Model):
 
     def __str__(self):
         return self.name
+
+class Connections(models.Model):
+    sender=models.ForeignKey(UserDataBase,related_name='sender',on_delete=models.CASCADE,null=True,blank=True)
+    receiver=models.ForeignKey(UserDataBase,related_name='receiver',on_delete=models.CASCADE,null=True,blank=True)
+    status=models.CharField(max_length=30,null=True,blank=True,default='Sent')
+    date=models.DateField(auto_now_add=True,null=True)
+
+    def __str__(self):
+        return self.sender.name+'<->'+self.receiver.name

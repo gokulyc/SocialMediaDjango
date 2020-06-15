@@ -46,13 +46,13 @@
     <div class="container">
 
       <!-- Logo -->
-      <div class="logo"> <a href="index.html"><img class="img-responsive" src="{% static 'images/logo-dark.png' %}" alt="" ></a> </div>
+      <div class="logo"> <a href="{% url 'login' %}"><img class="img-responsive" src="{% static 'images/logo-dark.png' %}" alt="" ></a> </div>
       <nav class="navbar ownmenu navbar-expand-lg" id="nav-resposive">
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
         <div class="collapse navbar-collapse" id="navbarNav" data-parent="#nav-resposive">
           <ul class="nav">
-            <li class="active"> <a href="">Home</a> </li>
-            <li class=""> <a href="">Connections</a> </li>
+            <li class="active"> <a href="{% url 'login' %}">Home</a> </li>
+            <li class=""> <a href="{%url 'professional'%}">Connections</a> </li>
             <li class=""> <a href="">Companies</a> </li>
             <li class=""> <a href="">Jobs</a> </li>
 

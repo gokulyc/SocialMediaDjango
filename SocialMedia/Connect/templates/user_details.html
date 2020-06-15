@@ -2,673 +2,790 @@
 
 {% load  static%}
 {% block content%}
-  <style>
-    .user-profile .pro-avatar {
+<style>
+  .user-profile .pro-avatar {
     position: absolute;
 
     bottom: 20px;
     left: 20px;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     border-radius: 50%;
     padding: 5px;
-}
-.user-profile .pro-avatar img{
-    height:200px;
-    width:100%;
+  }
+
+  .user-profile .pro-avatar img {
+    height: 200px;
+    width: 100%;
     border-radius: 50%;
 
-}
-  </style>
-  <!-- Content -->
-  <div id="content"> 
-    
-    <!-- Papular Companies -->
-    <section class="padding-bottom-100">
-      <div class="compny-profile user-profile"> 
-        <!-- SUB Banner -->
-        <div class="profile-bnr">
-          <div class="container"> 
-            
-            <!-- User Iinfo -->
-            <div class="user-info">
-              <div class="">
-                <div class="user-in container">
-                  <div class="pro-avatar "> <img src="{{ profile.image.url }}" alt="profile image" class="img-responsive  " > </div>
-                  <h1>{{profile.name}} <a class="veri" href="professional-details.html#." data-toggle="tooltip" data-placement="top" title="Verified Member"> <i class="fa fa-check"></i> </a> </h1>
-                  <h6>Professional Designer and Front-end developer</h6>
-                  <div class="social-links">
+  }
+</style>
+<!-- Content -->
+<div id="content">
 
-                    {% if profile.facebook_url%}
-                    <a href="{{profile.facebook_url}}"><i class="fab fa-facebook-f"></i></a>
-                    {%endif%}
-                    {% if profile.twitter_url%}
-                    <a href="{{profile.twitter_url}}"><i class="fab fa-twitter"></i></a>
-                    {%endif%}
-                    {% if profile.google_url%}
-                    <a href="{{profile.google_url}}"><i class="fab fa-google"></i></a>
-                    {%endif%}
-                    {% if profile.linkdin_url%}
-                    <a href="{{profile.linkdin_url}}"><i class="fab fa-linkedin-in"></i></a>
-                    {%endif%}
+  <!-- Papular Companies -->
+  <section class="padding-bottom-100">
+    <div class="compny-profile user-profile">
+      <!-- SUB Banner -->
+      <div class="profile-bnr">
+        <div class="container">
 
-<!--                    <a href="professional-details.html#."><i class="far fa-bookmark"></i> </a>-->
+          <!-- User Iinfo -->
+          <div class="user-info">
+            <div class="">
+              <div class="user-in container">
+                <div class="pro-avatar "> <img src="{{ profile.image.url }}" alt="profile image"
+                    class="img-responsive  "> </div>
+                <h1>{{profile.name}} <a class="veri" href="" data-toggle="tooltip" data-placement="top"
+                    title="Verified Member"> <i class="fa fa-check"></i> </a> </h1>
+                <h6>{{profile.title}}</h6>
+                <div class="social-links">
 
-                    {% if profile.email%}
-                    <a href="{% url profile.email}}"><i class="far fa-envelope"></i> </a>
-                    {%endif%}
+                  {% if profile.facebook_url%}
+                  <a href="{{profile.facebook_url}}"><i class="fab fa-facebook-f"></i></a>
+                  {%endif%}
+                  {% if profile.twitter_url%}
+                  <a href="{{profile.twitter_url}}"><i class="fab fa-twitter"></i></a>
+                  {%endif%}
+                  {% if profile.google_url%}
+                  <a href="{{profile.google_url}}"><i class="fab fa-google"></i></a>
+                  {%endif%}
+                  {% if profile.linkdin_url%}
+                  <a href="{{profile.linkdin_url}}"><i class="fab fa-linkedin-in"></i></a>
+                  {%endif%}
 
-                    <a href="professional-details.html#." class="float-right margin-right-0" data-toggle="tooltip" data-placement="top" title="Reports"><i class="fa fa-exclamation"></i> </a> </div>
-                  
-                  <!-- Followers -->
-                  <div class="followr">
-                    <ul class="row">
-                      <li class="col-sm-6">
-                        <p>Followers <span>(512)</span></p>
-                      </li>
-                      <li class="col-sm-6">
-                        <p>Following <span>(1874)</span></p>
-                      </li>
-                    </ul>
-                  </div>
+                  <!--                    <a href="professional-details.html#."><i class="far fa-bookmark"></i> </a>-->
+
+                  {% if profile.email%}
+                  <a href="{% url profile.email}}"><i class="far fa-envelope"></i> </a>
+                  {%endif%}
+                  {% if profile.usr.username != request.user.username %}
+                    {% if connection %}
+                    <a  class="float-right margin-right-0"
+                    data-toggle="tooltip" data-placement="top" title="Pending"><i class="fas fa-user-plus"></i> </a>
+                    {%else%}
+                  <a href=" {% url 'connections' 'Send_Request' profile.id %}" class="float-right margin-right-0"
+                    data-toggle="tooltip" data-placement="top" title="Follow"><i class="fas fa-user-plus"></i> </a>
+                  {% endif %}
+                  {% endif %}
                 </div>
-              </div>
-            </div>
-          </div>
-          Muhammad
-          <!-- Modal POPUP -->
-          <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <h6><a class="close" href="professional-details.html#." data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a> Send Message</h6>
-                <!-- Forms -->
-                <form action="#">
+
+                <!-- Followers -->
+                <div class="followr">
                   <ul class="row">
-                    <li class="col-md-6">
-                      <input type="text" placeholder="First Name" class="form-control">
+                    <li class="col-sm-6">
+                      <p>Followers <span>(512)</span></p>
                     </li>
-                    <li class="col-md-6">
-                      <input type="text" placeholder="Last Name" class="form-control">
-                    </li>
-                    <li class="col-md-6">
-                      <input type="text" placeholder="Country" class="form-control">
-                    </li>
-                    <li class="col-md-6">
-                      <input type="text" placeholder="Email" class="form-control">
-                    </li>
-                    <li class="col-md-12">
-                      <textarea placeholder="Your Message" class="form-control"></textarea>
-                    </li>
-                    <li class="col-md-12 text-center">
-                      <button class="btn">Send message</button>
+                    <li class="col-sm-6">
+                      <p>Following <span>(1874)</span></p>
                     </li>
                   </ul>
-                </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        
-        <!-- Profile Company Content -->
-        <div class="profile-company-content main-user">
-          <div class="container"> 
-            
-            <!-- Nav Tabs -->
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <li><a class="nav-link active" data-toggle="tab" href="professional-details.html#about" role="tab" aria-selected="true">About</a> </li>
-              <li><a class="nav-link" data-toggle="tab" href="professional-details.html#services" role="tab" aria-selected="true">Services</a> </li>
-              <li><a class="nav-link" data-toggle="tab" href="professional-details.html#portfolio" role="tab" aria-selected="true">Portfolio</a> </li>
-              <li><a class="nav-link" data-toggle="tab" href="professional-details.html#contact" role="tab" aria-selected="true">Contact</a> </li>
-              <li><a class="nav-link" data-toggle="tab" href="professional-details.html#support" role="tab" aria-selected="true">Support</a> </li>
-              <li><a class="nav-link" data-toggle="tab" href="professional-details.html#folow" role="tab" aria-selected="true">Followers<small>(6)</small></a> </li>
-              <li><a class="nav-link" data-toggle="tab" href="professional-details.html#folowng" role="tab" aria-selected="true">Following<small>(120)</small></a> </li>
-            </ul>
-            <div class="row"> 
-              <!-- SIDE BAR -->
-              <div class="col-lg-4"> 
-                
-                <!-- Company Information -->
-                <div class="sidebar"> 
-                  
+
+        <!-- Modal POPUP -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <h6><a class="close" href="professional-details.html#." data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></a> Send Message</h6>
+              <!-- Forms -->
+              <form action="#">
+                <ul class="row">
+                  <li class="col-md-6">
+                    <input type="text" placeholder="First Name" class="form-control">
+                  </li>
+                  <li class="col-md-6">
+                    <input type="text" placeholder="Last Name" class="form-control">
+                  </li>
+                  <li class="col-md-6">
+                    <input type="text" placeholder="Country" class="form-control">
+                  </li>
+                  <li class="col-md-6">
+                    <input type="text" placeholder="Email" class="form-control">
+                  </li>
+                  <li class="col-md-12">
+                    <textarea placeholder="Your Message" class="form-control"></textarea>
+                  </li>
+                  <li class="col-md-12 text-center">
+                    <button class="btn">Send message</button>
+                  </li>
+                </ul>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Company Content -->
+      <div class="profile-company-content main-user">
+        <div class="container">
+
+          <!-- Nav Tabs -->
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li><a class="nav-link active" data-toggle="tab" href="professional-details.html#about" role="tab"
+                aria-selected="true">About</a> </li>
+            <li><a class="nav-link" data-toggle="tab" href="professional-details.html#services" role="tab"
+                aria-selected="true">Services</a> </li>
+            <li><a class="nav-link" data-toggle="tab" href="professional-details.html#portfolio" role="tab"
+                aria-selected="true">Portfolio</a> </li>
+            <li><a class="nav-link" data-toggle="tab" href="professional-details.html#contact" role="tab"
+                aria-selected="true">Contact</a> </li>
+            <li><a class="nav-link" data-toggle="tab" href="professional-details.html#support" role="tab"
+                aria-selected="true">Support</a> </li>
+            <li><a class="nav-link" data-toggle="tab" href="professional-details.html#folow" role="tab"
+                aria-selected="true">Followers<small>(6)</small></a> </li>
+            <li><a class="nav-link" data-toggle="tab" href="professional-details.html#folowng" role="tab"
+                aria-selected="true">Following<small>(120)</small></a> </li>
+          </ul>
+          <div class="row">
+            <!-- SIDE BAR -->
+            <div class="col-lg-4">
+
+              <!-- Company Information -->
+              <div class="sidebar">
+
+                <!-- Heading for mobile Collapse -->
+                <h5 class="main-title margin-bottom-30">User Information
+                  {% if request.user.username == profile.usr.username %}
+                  <a href="{%url 'EditUserProfile' request.user.username %}"> <i class="fas fa-pencil-alt ml-2"></i></a>
+                  {% endif %}
+                </h5>
+                <div class="navbar-expand-lg">
                   <!-- Heading for mobile Collapse -->
-                  <h5 class="main-title margin-bottom-30">User Information
-                    {% if request.user.username == profile.usr.username %}
-                    <a href="{%url 'EditUserProfile' request.user.username %}"> <i class="fas fa-pencil-alt ml-2"></i></a>
-                    {% endif %}
-                  </h5>
-                  <div class="navbar-expand-lg"> 
-                    <!-- Heading for mobile Collapse -->
-                    <a class="collapsed main-title fr-mob" data-toggle="collapse" data-target="#cmpny-info" aria-expanded="false"> User Information </a>
-                    <div class="collapse navbar-collapse" id="cmpny-info">
-                      <div class="side-bar-indide"> 
-                        
-                        <!-- Company Information -->
-                        <div class="sidebar-information">
-                          <ul class="single-category">
-                             {% if profile.name%}
-                            <li>
-                              <h6 class="title">Name</h6>
-                              <span class="subtitle">{{profile.name}}</span> </li>
-                            <li>
-                              {%endif%}
-                              {% if profile.name%}
-                              <h6 class="title">Age</h6>
-                              <span class="subtitle">{{profile.name}}</span> </li>{%endif%}
+                  <a class="collapsed main-title fr-mob" data-toggle="collapse" data-target="#cmpny-info"
+                    aria-expanded="false"> User Information </a>
+                  <div class="collapse navbar-collapse" id="cmpny-info">
+                    <div class="side-bar-indide">
+
+                      <!-- Company Information -->
+                      <div class="sidebar-information">
+                        <ul class="single-category">
+                          {% if profile.name%}
+                          <li>
+                            <h6 class="title">Name</h6>
+                            <span class="subtitle">{{profile.name}}</span>
+                          </li>
+                          <li>
+                            {%endif%}
                             {% if profile.name%}
-                            <li>
-                              <h6 class="title">Location</h6>
-                              <span class="subtitle">{{profile.location}}</span> </li>{%endif%}
-                            {% if profile.experiance%}
-                            <li>
-                              <h6 class="title">Experiance</h6>
-                              <span class="subtitle">{{profile.experiance}}</span> </li>{%endif%}
-                            {% if profile.degree%}
-                            <li>
-                              <h6 class="title">Degree</h6>
-                              <span class="subtitle">{{profile.degree}}</span> </li>{%endif%}
+                            <h6 class="title">Age</h6>
+                            <span class="subtitle">{{profile.name}}</span> </li>{%endif%}
+                          {% if profile.name%}
+                          <li>
+                            <h6 class="title">Location</h6>
+                            <span class="subtitle">{{profile.location}}</span>
+                          </li>{%endif%}
+                          {% if profile.experiance%}
+                          <li>
+                            <h6 class="title">Experiance</h6>
+                            <span class="subtitle">{{profile.experiance}}</span>
+                          </li>{%endif%}
+                          {% if profile.degree%}
+                          <li>
+                            <h6 class="title">Degree</h6>
+                            <span class="subtitle">{{profile.degree}}</span>
+                          </li>{%endif%}
 
-                            {% if profile.number%}
-                            <li>
-                              <h6 class="title">Phone</h6>
-                              <span class="subtitle">{{profile.number}}</span> </li>{%endif%}
+                          {% if profile.number%}
+                          <li>
+                            <h6 class="title">Phone</h6>
+                            <span class="subtitle">{{profile.number}}</span>
+                          </li>{%endif%}
 
-                            {% if profile.profile_title%}
-                            <li>
-                              <h6 class="title">Email</h6>
-                              <div class="subtitle"><a href="professional-details.html#.">{{profile.profile_title}}</a> </div>
-                            </li>{%endif%}
+                          {% if profile.profile_title%}
+                          <li>
+                            <h6 class="title">Email</h6>
+                            <div class="subtitle"><a href="">{{profile.profile_title}}</a>
+                            </div>
+                          </li>{%endif%}
 
-                            {% if profile.website%}
-                            <li>
-                              <h6 class="title">Website</h6>
-                              <div class="subtitle"> <a href="" target="_blank">{{profile.website}}</a> </div>
-                            </li>{%endif%}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Company Rating -->
-                <div class="sidebar">
-                  <h5 class="main-title margin-bottom-20">Rating</h5>
-                  <div class="navbar-expand-lg"> 
-                    <!-- Heading for mobile Collapse --> 
-                    <a class="collapsed main-title fr-mob" data-toggle="collapse" data-target="#cmpny-rtng" aria-expanded="false"> Rating </a>
-                    <div class="collapse navbar-collapse" id="cmpny-rtng">
-                      <div class="side-bar-indide">
-                        <div class="sidebar-information">
-                          <ul class="single-category com-rate">
-                            <li>
-                              <h6 class="title">Expertise:</h6>
-                              <span class="subtitle"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half-alt"></i> </span> </li>
-                            <li>
-                              <h6 class="title">Knowledge:</h6>
-                              <span class="subtitle"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i> <i class="far fa-star"></i> <i class="far fa-star"></i> </span> </li>
-                            <li>
-                              <h6 class="title">Quality:</h6>
-                              <span class="subtitle"><i class="fas fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half-alt"></i> </span> </li>
-                            <li>
-                              <h6 class="title">Price:</h6>
-                              <span class="subtitle"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i> <i class="far fa-star"></i> </span> </li>
-                            <li>
-                              <h6 class="title">Services:</h6>
-                              <span class="subtitle"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i> </span> </li>
-                          </ul>
-                        </div>
+                          {% if profile.website%}
+                          <li>
+                            <h6 class="title">Website</h6>
+                            <div class="subtitle"> <a href="" target="_blank">{{profile.website}}</a> </div>
+                          </li>{%endif%}
+                        </ul>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              
-              <!-- Tab Content -->
-              <div class="col-lg-8">
-                <div class="tab-content"> 
-                  
-                  <!-- About Company -->
-                  <div id="about" class="tab-pane fade show active">
-                    <div class="profile-main">
-                      <h3>About the Professionals</h3>
-                      <div class="profile-in">
-                        <p>{{profile.about}}</p>
-                        
-                        <!-- Progress Skills -->
-                        <div class="skills"> 
-                          
-                          <!-- SKILLS BAR Style -->
-                          <div class="progress-bars style-2"> 
-                            
-                            <!-- Photoshop -->
-                            <div class="bar">
-                              <p>Photoshop </p>
-                              <span class="progress-bar-tooltip caret-down">95%</span>
-                              <div class="progress" data-percent="95%">
-                                <div class="progress-bar"> </div>
-                              </div>
-                            </div>
-                            
-                            <!-- ILLUSTRATOR -->
-                            <div class="bar">
-                              <p>ILLUSTRATOR</p>
-                              <span class="progress-bar-tooltip caret-down">75%</span>
-                              <div class="progress" data-percent="75%">
-                                <div class="progress-bar progress-bar-primary"> </div>
-                              </div>
-                            </div>
-                            
-                            <!-- DESIGN -->
-                            <div class="bar">
-                              <p>html 5 / css</p>
-                              <span class="progress-bar-tooltip caret-down">80%</span>
-                              <div class="progress" data-percent="80%">
-                                <div class="progress-bar progress-bar-primary"> </div>
-                              </div>
-                            </div>
-                            
-                            <!-- DESIGN -->
-                            <div class="bar">
-                              <p>UX/UI DeSIGN</p>
-                              <span class="progress-bar-tooltip caret-down">90%</span>
-                              <div class="progress" data-percent="90%">
-                                <div class="progress-bar progress-bar-primary"> </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <!-- Some Facts -->
-                        <div class="dev-activ text-center padding-bottom-20 margin-top-50">
-                          <ul class="row">
-                            <li class="col">
-                              <div class="icon"> <i class="flaticon-resume"></i> </div>
-                              <span><span class="counter">542</span>+</span>
-                              <p>Jobs Completed</p>
-                            </li>
-                            <li class="col">
-                              <div class="icon"> <i class="flaticon-group"></i></div>
-                              <span><span class="counter">1850</span></span>
-                              <p>Work with Companies</p>
-                            </li>
-                            <li class="col">
-                              <div class="icon"><i class="flaticon-happiness"></i></div>
-                              <span><span class="counter">45057</span>+</span>
-                              <p>Happy clients</p>
-                            </li>
-                            <li class="col">
-                              <div class="icon"><i class="flaticon-award"></i></div>
-                              <span class="counter">80</span>
-                              <p>Awards</p>
-                            </li>
-                          </ul>
-                        </div>
+
+              <!-- Company Rating -->
+              <div class="sidebar">
+                <h5 class="main-title margin-bottom-20">Rating</h5>
+                <div class="navbar-expand-lg">
+                  <!-- Heading for mobile Collapse -->
+                  <a class="collapsed main-title fr-mob" data-toggle="collapse" data-target="#cmpny-rtng"
+                    aria-expanded="false"> Rating </a>
+                  <div class="collapse navbar-collapse" id="cmpny-rtng">
+                    <div class="side-bar-indide">
+                      <div class="sidebar-information">
+                        <ul class="single-category com-rate">
+                          <li>
+                            <h6 class="title">Expertise:</h6>
+                            <span class="subtitle"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+                                class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half-alt"></i>
+                            </span>
+                          </li>
+                          <li>
+                            <h6 class="title">Knowledge:</h6>
+                            <span class="subtitle"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
+                                class="fas fa-star-half-alt"></i> <i class="far fa-star"></i> <i
+                                class="far fa-star"></i> </span>
+                          </li>
+                          <li>
+                            <h6 class="title">Quality:</h6>
+                            <span class="subtitle"><i class="fas fa-star"></i> <i class="fa fa-star"></i> <i
+                                class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half-alt"></i>
+                            </span>
+                          </li>
+                          <li>
+                            <h6 class="title">Price:</h6>
+                            <span class="subtitle"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
+                                class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i> <i
+                                class="far fa-star"></i> </span>
+                          </li>
+                          <li>
+                            <h6 class="title">Services:</h6>
+                            <span class="subtitle"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
+                                class="fas fa-star"></i> <i class="fas fa-star"></i> <i
+                                class="fas fa-star-half-alt"></i> </span>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>
-                  <div id="services" class="tab-pane fade">
-                    <div class="profile-main">
-                      <h3>Services</h3>
-                      <div class="profile-in">
-                        <div class="row"> 
-                          
-                          <!-- Icon -->
-                          <div class="col-md-6">
-                            <div class="icon-box ib-style-5 ib-center ib-text-alt ib-bordered ib-bordered-white ib-bordered-thin ib-medium ib-circle">
-                              <div class="ib-icon"> <i class="far fa-gem"></i> </div>
-                              <div class="ib-info">
-                                <h4 class="h6">Web Design</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, </p>
-                                <a href="professional-details.html#">Contact Now </a> </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="col-lg-8">
+              <div class="tab-content">
+
+                <!-- About Company -->
+                <div id="about" class="tab-pane fade show active">
+                  <div class="profile-main">
+                    <h3>About the Professionals</h3>
+                    <div class="profile-in">
+                      <p>{{profile.about}}</p>
+
+                      <!-- Progress Skills -->
+                      <div class="skills">
+
+                        <!-- SKILLS BAR Style -->
+                        <div class="progress-bars style-2">
+
+                          <!-- Photoshop -->
+                          <div class="bar">
+                            <p>Photoshop </p>
+                            <span class="progress-bar-tooltip caret-down">95%</span>
+                            <div class="progress" data-percent="95%">
+                              <div class="progress-bar"> </div>
                             </div>
                           </div>
-                          
-                          <!-- Icon -->
-                          <div class="col-md-6">
-                            <div class="icon-box ib-style-5 ib-center ib-text-alt ib-bordered ib-bordered-white ib-bordered-thin ib-medium ib-circle">
-                              <div class="ib-icon"> <i class="fas fa-anchor"></i> </div>
-                              <div class="ib-info">
-                                <h4 class="h6">Motion Graphic</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, </p>
-                                <a href="professional-details.html#">Contact Now </a> </div>
+
+                          <!-- ILLUSTRATOR -->
+                          <div class="bar">
+                            <p>ILLUSTRATOR</p>
+                            <span class="progress-bar-tooltip caret-down">75%</span>
+                            <div class="progress" data-percent="75%">
+                              <div class="progress-bar progress-bar-primary"> </div>
                             </div>
                           </div>
-                          
-                          <!-- Icon -->
-                          <div class="col-md-6">
-                            <div class="icon-box ib-style-5 ib-center ib-text-alt ib-bordered ib-bordered-white ib-bordered-thin ib-medium ib-circle">
-                              <div class="ib-icon"> <i class="fab fa-viacoin"></i> </div>
-                              <div class="ib-info">
-                                <h4 class="h6">Branding Design</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, </p>
-                                <a href="professional-details.html#">Contact Now </a> </div>
+
+                          <!-- DESIGN -->
+                          <div class="bar">
+                            <p>html 5 / css</p>
+                            <span class="progress-bar-tooltip caret-down">80%</span>
+                            <div class="progress" data-percent="80%">
+                              <div class="progress-bar progress-bar-primary"> </div>
                             </div>
                           </div>
-                          
-                          <!-- Icon -->
-                          <div class="col-md-6">
-                            <div class="icon-box ib-style-5 ib-center ib-text-alt ib-bordered ib-bordered-white ib-bordered-thin ib-medium ib-circle">
-                              <div class="ib-icon"> <i class="fa fa-trophy"></i> </div>
-                              <div class="ib-info">
-                                <h4 class="h6">Google Sell</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, </p>
-                                <a href="professional-details.html#">Contact Now </a> </div>
-                            </div>
-                          </div>
-                          
-                          <!-- Icon -->
-                          <div class="col-md-6">
-                            <div class="icon-box ib-style-5 ib-center ib-text-alt ib-bordered ib-bordered-white ib-bordered-thin ib-medium ib-circle">
-                              <div class="ib-icon"> <i class="fa fa-anchor"></i> </div>
-                              <div class="ib-info">
-                                <h4 class="h6">Motion Graphic</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, </p>
-                                <a href="professional-details.html#">Contact Now </a> </div>
-                            </div>
-                          </div>
-                          
-                          <!-- Icon -->
-                          <div class="col-md-6">
-                            <div class="icon-box ib-style-5 ib-center ib-text-alt ib-bordered ib-bordered-white ib-bordered-thin ib-medium ib-circle">
-                              <div class="ib-icon"> <i class="far fa-gem"></i> </div>
-                              <div class="ib-info">
-                                <h4 class="h6">Branding Design</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, </p>
-                                <a href="professional-details.html#">Contact Now </a> </div>
+
+                          <!-- DESIGN -->
+                          <div class="bar">
+                            <p>UX/UI DeSIGN</p>
+                            <span class="progress-bar-tooltip caret-down">90%</span>
+                            <div class="progress" data-percent="90%">
+                              <div class="progress-bar progress-bar-primary"> </div>
                             </div>
                           </div>
                         </div>
                       </div>
+
+                      <!-- Some Facts -->
+                      <div class="dev-activ text-center padding-bottom-20 margin-top-50">
+                        <ul class="row">
+                          <li class="col">
+                            <div class="icon"> <i class="flaticon-resume"></i> </div>
+                            <span><span class="counter">542</span>+</span>
+                            <p>Jobs Completed</p>
+                          </li>
+                          <li class="col">
+                            <div class="icon"> <i class="flaticon-group"></i></div>
+                            <span><span class="counter">1850</span></span>
+                            <p>Work with Companies</p>
+                          </li>
+                          <li class="col">
+                            <div class="icon"><i class="flaticon-happiness"></i></div>
+                            <span><span class="counter">45057</span>+</span>
+                            <p>Happy clients</p>
+                          </li>
+                          <li class="col">
+                            <div class="icon"><i class="flaticon-award"></i></div>
+                            <span class="counter">80</span>
+                            <p>Awards</p>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                  
-                  <!-- PORTFOLIO -->
-                  <div id="portfolio" class="tab-pane fade">
-                    <div class="profile-main">
-                      <h3>Portfolio</h3>
-                      <div class="profile-in portfolio"> 
-                        
-                        <!-- PORTFOLIO ITEMS -->
-                        <div class="items item-space row animate fadeInUp" data-wow-delay="0.4s"> 
-                          
-                          <!-- ITEM -->
-                          <article class="portfolio-item pf-web-design">
-                            <div class="portfolio-image"> <a href="professional-details.html#."> <img class="img-responsive" alt="Open Imagination" src="{% static 'images/img-1.jpg' %}"> </a>
-                              <div class="portfolio-overlay style-4">
-                                <div class="detail-info">
-                                  <div class="position-center-center">
-                                    <h3 class="no-margin">Assembly Branding</h3>
-                                    <hr class="balck">
-                                    <span><a href="professional-details.html#.">Fashion / trending</a></span> <a href="professional-details.html#." class="go"><i class="fa fa-search"></i></a> <a href="professional-details.html#." class="go"><i class="fa fa-link"></i></a> </div>
-                                </div>
-                              </div>
+                </div>
+                <div id="services" class="tab-pane fade">
+                  <div class="profile-main">
+                    <h3>Services</h3>
+                    <div class="profile-in">
+                      <div class="row">
+
+                        <!-- Icon -->
+                        <div class="col-md-6">
+                          <div
+                            class="icon-box ib-style-5 ib-center ib-text-alt ib-bordered ib-bordered-white ib-bordered-thin ib-medium ib-circle">
+                            <div class="ib-icon"> <i class="far fa-gem"></i> </div>
+                            <div class="ib-info">
+                              <h4 class="h6">Web Design</h4>
+                              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, </p>
+                              <a href="professional-details.html#">Contact Now </a>
                             </div>
-                          </article>
-                          
-                          <!-- ITEM -->
-                          <article class="portfolio-item pf-photography pf-branding-design">
-                            <div class="portfolio-image"> <a href="professional-details.html#."> <img class="img-responsive" alt="Open Imagination" src="{% static 'images/img-2.jpg' %}"> </a>
-                              <div class="portfolio-overlay style-4">
-                                <div class="detail-info">
-                                  <div class="position-center-center">
-                                    <h3 class="no-margin">Assembly Branding</h3>
-                                    <hr class="balck">
-                                    <span><a href="professional-details.html#.">Fashion / trending</a></span> <a href="professional-details.html#." class="go"><i class="fa fa-search"></i></a> <a href="professional-details.html#." class="go"><i class="fa fa-link"></i></a> </div>
-                                </div>
-                              </div>
+                          </div>
+                        </div>
+
+                        <!-- Icon -->
+                        <div class="col-md-6">
+                          <div
+                            class="icon-box ib-style-5 ib-center ib-text-alt ib-bordered ib-bordered-white ib-bordered-thin ib-medium ib-circle">
+                            <div class="ib-icon"> <i class="fas fa-anchor"></i> </div>
+                            <div class="ib-info">
+                              <h4 class="h6">Motion Graphic</h4>
+                              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, </p>
+                              <a href="professional-details.html#">Contact Now </a>
                             </div>
-                          </article>
-                          
-                          <!-- ITEM -->
-                          <article class="portfolio-item pf-web-design pf-branding-design">
-                            <div class="portfolio-image"> <a href="professional-details.html#."> <img class="img-responsive" alt="Open Imagination" src="{% static 'images/img-3.jpg' %}"> </a>
-                              <div class="portfolio-overlay style-4">
-                                <div class="detail-info">
-                                  <div class="position-center-center">
-                                    <h3 class="no-margin">Assembly Branding</h3>
-                                    <hr class="balck">
-                                    <span><a href="professional-details.html#.">Fashion / trending</a></span> <a href="professional-details.html#." class="go"><i class="fa fa-search"></i></a> <a href="professional-details.html#." class="go"><i class="fa fa-link"></i></a> </div>
-                                </div>
-                              </div>
+                          </div>
+                        </div>
+
+                        <!-- Icon -->
+                        <div class="col-md-6">
+                          <div
+                            class="icon-box ib-style-5 ib-center ib-text-alt ib-bordered ib-bordered-white ib-bordered-thin ib-medium ib-circle">
+                            <div class="ib-icon"> <i class="fab fa-viacoin"></i> </div>
+                            <div class="ib-info">
+                              <h4 class="h6">Branding Design</h4>
+                              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, </p>
+                              <a href="professional-details.html#">Contact Now </a>
                             </div>
-                          </article>
-                          
-                          <!-- ITEM -->
-                          <article class="portfolio-item pf-web-design pf-digital-art ">
-                            <div class="portfolio-image"> <a href="professional-details.html#."> <img class="img-responsive" alt="Open Imagination" src="{% static 'images/img-4.jpg' %}"> </a>
-                              <div class="portfolio-overlay style-4">
-                                <div class="detail-info">
-                                  <div class="position-center-center">
-                                    <h3 class="no-margin">Assembly Branding</h3>
-                                    <hr class="balck">
-                                    <span><a href="professional-details.html#.">Fashion / trending</a></span> <a href="professional-details.html#." class="go"><i class="fa fa-search"></i></a> <a href="professional-details.html#." class="go"><i class="fa fa-link"></i></a> </div>
-                                </div>
-                              </div>
+                          </div>
+                        </div>
+
+                        <!-- Icon -->
+                        <div class="col-md-6">
+                          <div
+                            class="icon-box ib-style-5 ib-center ib-text-alt ib-bordered ib-bordered-white ib-bordered-thin ib-medium ib-circle">
+                            <div class="ib-icon"> <i class="fa fa-trophy"></i> </div>
+                            <div class="ib-info">
+                              <h4 class="h6">Google Sell</h4>
+                              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, </p>
+                              <a href="professional-details.html#">Contact Now </a>
                             </div>
-                          </article>
-                          
-                          <!-- ITEM -->
-                          <article class="portfolio-item pf-branding-design pf-digital-art">
-                            <div class="portfolio-image"> <a href="professional-details.html#."> <img class="img-responsive" alt="Open Imagination" src="{% static 'images/img-5.jpg' %}"> </a>
-                              <div class="portfolio-overlay style-4">
-                                <div class="detail-info">
-                                  <div class="position-center-center">
-                                    <h3 class="no-margin">Assembly Branding</h3>
-                                    <hr class="balck">
-                                    <span><a href="professional-details.html#.">Fashion / trending</a></span> <a href="professional-details.html#." class="go"><i class="fa fa-search"></i></a> <a href="professional-details.html#." class="go"><i class="fa fa-link"></i></a> </div>
-                                </div>
-                              </div>
+                          </div>
+                        </div>
+
+                        <!-- Icon -->
+                        <div class="col-md-6">
+                          <div
+                            class="icon-box ib-style-5 ib-center ib-text-alt ib-bordered ib-bordered-white ib-bordered-thin ib-medium ib-circle">
+                            <div class="ib-icon"> <i class="fa fa-anchor"></i> </div>
+                            <div class="ib-info">
+                              <h4 class="h6">Motion Graphic</h4>
+                              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, </p>
+                              <a href="professional-details.html#">Contact Now </a>
                             </div>
-                          </article>
-                          
-                          <!-- ITEM -->
-                          <article class="portfolio-item pf-design pf-digital-art">
-                            <div class="portfolio-image"> <a href="professional-details.html#."> <img class="img-responsive" alt="Open Imagination" src="{% static 'images/img-9.jpg' %}"> </a>
-                              <div class="portfolio-overlay style-4">
-                                <div class="detail-info">
-                                  <div class="position-center-center">
-                                    <h3 class="no-margin">Assembly Branding</h3>
-                                    <hr class="balck">
-                                    <span><a href="professional-details.html#.">Fashion / trending</a></span> <a href="professional-details.html#." class="go"><i class="fa fa-search"></i></a> <a href="professional-details.html#." class="go"><i class="fa fa-link"></i></a> </div>
-                                </div>
-                              </div>
+                          </div>
+                        </div>
+
+                        <!-- Icon -->
+                        <div class="col-md-6">
+                          <div
+                            class="icon-box ib-style-5 ib-center ib-text-alt ib-bordered ib-bordered-white ib-bordered-thin ib-medium ib-circle">
+                            <div class="ib-icon"> <i class="far fa-gem"></i> </div>
+                            <div class="ib-info">
+                              <h4 class="h6">Branding Design</h4>
+                              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, </p>
+                              <a href="professional-details.html#">Contact Now </a>
                             </div>
-                          </article>
-                          
-                          <!-- ITEM -->
-                          <article class="portfolio-item pf-web-design pf-branding-design">
-                            <div class="portfolio-image"> <a href="professional-details.html#."> <img class="img-responsive" alt="Open Imagination" src="{% static 'images/img-7.jpg' %}"> </a>
-                              <div class="portfolio-overlay style-4">
-                                <div class="detail-info">
-                                  <div class="position-center-center">
-                                    <h3 class="no-margin">Assembly Branding</h3>
-                                    <hr class="balck">
-                                    <span><a href="professional-details.html#.">Fashion / trending</a></span> <a href="professional-details.html#." class="go"><i class="fa fa-search"></i></a> <a href="professional-details.html#." class="go"><i class="fa fa-link"></i></a> </div>
-                                </div>
-                              </div>
-                            </div>
-                          </article>
-                          
-                          <!-- ITEM -->
-                          <article class="portfolio-item pf-web-design pf-digital-art ">
-                            <div class="portfolio-image"> <a href="professional-details.html#."> <img class="img-responsive" alt="Open Imagination" src="{% static 'images/img-8.jpg' %}"> </a>
-                              <div class="portfolio-overlay style-4">
-                                <div class="detail-info">
-                                  <div class="position-center-center">
-                                    <h3 class="no-margin">Assembly Branding</h3>
-                                    <hr class="balck">
-                                    <span><a href="professional-details.html#.">Fashion / trending</a></span> <a href="professional-details.html#." class="go"><i class="fa fa-search"></i></a> <a href="professional-details.html#." class="go"><i class="fa fa-link"></i></a> </div>
-                                </div>
-                              </div>
-                            </div>
-                          </article>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  
-                  <!-- Jobs --> 
-                  
-                  <!-- Contact -->
-                  <div id="contact" class="tab-pane fade">
-                    <div class="profile-main">
-                      <h3>Contact the {{profile.name}}</h3>
-                      <div class="profile-in">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate quis tenetur velit! Provident eum molestias aperiam suscipit distinctio ipsum cupiditate quasi, dolor sunt, cum reprehenderit quibusdam, repellendus eaque, quas magni.</p>
-                        <form action="#" class="contact-company">
-                          <ul class="row">
-                            <li class="col-sm-6">
-                              <input type="text" placeholder="Full Name " class="form-control">
-                            </li>
-                            <li class="col-sm-6">
-                              <input type="text" placeholder="E-mail address" class="form-control">
-                            </li>
-                            <li class="col-sm-6">
-                              <input type="text" placeholder="Phone Number" class="form-control">
-                            </li>
-                            <li class="col-sm-6">
-                              <input type="text" placeholder="Subject" class="form-control">
-                            </li>
-                            <li class="col-sm-12">
-                              <textarea placeholder="Your Message" class="form-control"></textarea>
-                            </li>
-                          </ul>
-                          <button class="btn">Send message</button>
-                        </form>
+                </div>
+
+                <!-- PORTFOLIO -->
+                <div id="portfolio" class="tab-pane fade">
+                  <div class="profile-main">
+                    <h3>Portfolio</h3>
+                    <div class="profile-in portfolio">
+
+                      <!-- PORTFOLIO ITEMS -->
+                      <div class="items item-space row animate fadeInUp" data-wow-delay="0.4s">
+
+                        <!-- ITEM -->
+                        <article class="portfolio-item pf-web-design">
+                          <div class="portfolio-image"> <a href="professional-details.html#."> <img
+                                class="img-responsive" alt="Open Imagination" src="{% static 'images/img-1.jpg' %}">
+                            </a>
+                            <div class="portfolio-overlay style-4">
+                              <div class="detail-info">
+                                <div class="position-center-center">
+                                  <h3 class="no-margin">Assembly Branding</h3>
+                                  <hr class="balck">
+                                  <span><a href="professional-details.html#.">Fashion / trending</a></span> <a
+                                    href="professional-details.html#." class="go"><i class="fa fa-search"></i></a> <a
+                                    href="professional-details.html#." class="go"><i class="fa fa-link"></i></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </article>
+
+                        <!-- ITEM -->
+                        <article class="portfolio-item pf-photography pf-branding-design">
+                          <div class="portfolio-image"> <a href="professional-details.html#."> <img
+                                class="img-responsive" alt="Open Imagination" src="{% static 'images/img-2.jpg' %}">
+                            </a>
+                            <div class="portfolio-overlay style-4">
+                              <div class="detail-info">
+                                <div class="position-center-center">
+                                  <h3 class="no-margin">Assembly Branding</h3>
+                                  <hr class="balck">
+                                  <span><a href="professional-details.html#.">Fashion / trending</a></span> <a
+                                    href="professional-details.html#." class="go"><i class="fa fa-search"></i></a> <a
+                                    href="professional-details.html#." class="go"><i class="fa fa-link"></i></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </article>
+
+                        <!-- ITEM -->
+                        <article class="portfolio-item pf-web-design pf-branding-design">
+                          <div class="portfolio-image"> <a href="professional-details.html#."> <img
+                                class="img-responsive" alt="Open Imagination" src="{% static 'images/img-3.jpg' %}">
+                            </a>
+                            <div class="portfolio-overlay style-4">
+                              <div class="detail-info">
+                                <div class="position-center-center">
+                                  <h3 class="no-margin">Assembly Branding</h3>
+                                  <hr class="balck">
+                                  <span><a href="professional-details.html#.">Fashion / trending</a></span> <a
+                                    href="professional-details.html#." class="go"><i class="fa fa-search"></i></a> <a
+                                    href="professional-details.html#." class="go"><i class="fa fa-link"></i></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </article>
+
+                        <!-- ITEM -->
+                        <article class="portfolio-item pf-web-design pf-digital-art ">
+                          <div class="portfolio-image"> <a href="professional-details.html#."> <img
+                                class="img-responsive" alt="Open Imagination" src="{% static 'images/img-4.jpg' %}">
+                            </a>
+                            <div class="portfolio-overlay style-4">
+                              <div class="detail-info">
+                                <div class="position-center-center">
+                                  <h3 class="no-margin">Assembly Branding</h3>
+                                  <hr class="balck">
+                                  <span><a href="professional-details.html#.">Fashion / trending</a></span> <a
+                                    href="professional-details.html#." class="go"><i class="fa fa-search"></i></a> <a
+                                    href="professional-details.html#." class="go"><i class="fa fa-link"></i></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </article>
+
+                        <!-- ITEM -->
+                        <article class="portfolio-item pf-branding-design pf-digital-art">
+                          <div class="portfolio-image"> <a href="professional-details.html#."> <img
+                                class="img-responsive" alt="Open Imagination" src="{% static 'images/img-5.jpg' %}">
+                            </a>
+                            <div class="portfolio-overlay style-4">
+                              <div class="detail-info">
+                                <div class="position-center-center">
+                                  <h3 class="no-margin">Assembly Branding</h3>
+                                  <hr class="balck">
+                                  <span><a href="professional-details.html#.">Fashion / trending</a></span> <a
+                                    href="professional-details.html#." class="go"><i class="fa fa-search"></i></a> <a
+                                    href="professional-details.html#." class="go"><i class="fa fa-link"></i></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </article>
+
+                        <!-- ITEM -->
+                        <article class="portfolio-item pf-design pf-digital-art">
+                          <div class="portfolio-image"> <a href="professional-details.html#."> <img
+                                class="img-responsive" alt="Open Imagination" src="{% static 'images/img-9.jpg' %}">
+                            </a>
+                            <div class="portfolio-overlay style-4">
+                              <div class="detail-info">
+                                <div class="position-center-center">
+                                  <h3 class="no-margin">Assembly Branding</h3>
+                                  <hr class="balck">
+                                  <span><a href="professional-details.html#.">Fashion / trending</a></span> <a
+                                    href="professional-details.html#." class="go"><i class="fa fa-search"></i></a> <a
+                                    href="professional-details.html#." class="go"><i class="fa fa-link"></i></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </article>
+
+                        <!-- ITEM -->
+                        <article class="portfolio-item pf-web-design pf-branding-design">
+                          <div class="portfolio-image"> <a href="professional-details.html#."> <img
+                                class="img-responsive" alt="Open Imagination" src="{% static 'images/img-7.jpg' %}">
+                            </a>
+                            <div class="portfolio-overlay style-4">
+                              <div class="detail-info">
+                                <div class="position-center-center">
+                                  <h3 class="no-margin">Assembly Branding</h3>
+                                  <hr class="balck">
+                                  <span><a href="professional-details.html#.">Fashion / trending</a></span> <a
+                                    href="professional-details.html#." class="go"><i class="fa fa-search"></i></a> <a
+                                    href="professional-details.html#." class="go"><i class="fa fa-link"></i></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </article>
+
+                        <!-- ITEM -->
+                        <article class="portfolio-item pf-web-design pf-digital-art ">
+                          <div class="portfolio-image"> <a href="professional-details.html#."> <img
+                                class="img-responsive" alt="Open Imagination" src="{% static 'images/img-8.jpg' %}">
+                            </a>
+                            <div class="portfolio-overlay style-4">
+                              <div class="detail-info">
+                                <div class="position-center-center">
+                                  <h3 class="no-margin">Assembly Branding</h3>
+                                  <hr class="balck">
+                                  <span><a href="professional-details.html#.">Fashion / trending</a></span> <a
+                                    href="professional-details.html#." class="go"><i class="fa fa-search"></i></a> <a
+                                    href="professional-details.html#." class="go"><i class="fa fa-link"></i></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </article>
                       </div>
                     </div>
                   </div>
-                  
-                  <!-- Support -->
-                  <div id="support" class="tab-pane fade">
-                    <div class="profile-main">
-                      <h3>Support</h3>
-                      <div class="profile-in"> </div>
+                </div>
+
+                <!-- Jobs -->
+
+                <!-- Contact -->
+                <div id="contact" class="tab-pane fade">
+                  <div class="profile-main">
+                    <h3>Contact the {{profile.name}}</h3>
+                    <div class="profile-in">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate quis tenetur velit!
+                        Provident eum molestias aperiam suscipit distinctio ipsum cupiditate quasi, dolor sunt, cum
+                        reprehenderit quibusdam, repellendus eaque, quas magni.</p>
+                      <form action="#" class="contact-company">
+                        <ul class="row">
+                          <li class="col-sm-6">
+                            <input type="text" placeholder="Full Name " class="form-control">
+                          </li>
+                          <li class="col-sm-6">
+                            <input type="text" placeholder="E-mail address" class="form-control">
+                          </li>
+                          <li class="col-sm-6">
+                            <input type="text" placeholder="Phone Number" class="form-control">
+                          </li>
+                          <li class="col-sm-6">
+                            <input type="text" placeholder="Subject" class="form-control">
+                          </li>
+                          <li class="col-sm-12">
+                            <textarea placeholder="Your Message" class="form-control"></textarea>
+                          </li>
+                        </ul>
+                        <button class="btn">Send message</button>
+                      </form>
                     </div>
                   </div>
-                  
-                  <!-- Follows -->
-                  <div id="folow" class="tab-pane fade">
-                    <div class="profile-main">
-                      <h3>Followers(6)</h3>
-                      <div class="profile-in"> 
-                        
-                        <!-- Follows -->
-                        <div class="followers-sec">
-                          <ul>
-                            <!-- Follows -->
-                            <li>
-                              <div class="inside">
-                                <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt="" class="img-responsive"> </div>
-                                <h4>Webicode</h4>
-                                <p> <span>Member Since:</span> March 2019</p>
-                                <a href="professional-details.html#." class="btn btn-inverse"> Follow</a> </div>
-                            </li>
-                            
-                            <!-- Follows -->
-                            <li>
-                              <div class="inside">
-                                <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt="" class="img-responsive"> </div>
-                                <h4>Webicode</h4>
-                                <p> <span>Member Since:</span> March 2019</p>
-                                <a href="professional-details.html#." class="btn btn-inverse"> Follow</a> </div>
-                            </li>
-                            
-                            <!-- Follows -->
-                            <li>
-                              <div class="inside">
-                                <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt="" class="img-responsive"> </div>
-                                <h4>Webicode</h4>
-                                <p> <span>Member Since:</span> March 2019</p>
-                                <a href="professional-details.html#." class="btn btn-inverse"> Follow</a></div>
-                            </li>
-                            
-                            <!-- Follows -->
-                            <li>
-                              <div class="inside">
-                                <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt="" class="img-responsive"> </div>
-                                <h4>Webicode</h4>
-                                <p> <span>Member Since:</span> March 2019</p>
-                                <a href="professional-details.html#." class="btn btn-inverse"> Follow</a> </div>
-                            </li>
-                            
-                            <!-- Follows -->
-                            <li>
-                              <div class="inside">
-                                <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt="" class="img-responsive"> </div>
-                                <h4>Webicode</h4>
-                                <p> <span>Member Since:</span> March 2019</p>
-                                <a href="professional-details.html#." class="btn btn-inverse"> Follow</a> </div>
-                            </li>
-                            
-                            <!-- Follows -->
-                            <li>
-                              <div class="inside">
-                                <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt="" class="img-responsive"> </div>
-                                <h4>Webicode</h4>
-                                <p> <span>Member Since:</span> March 2019</p>
-                                <a href="professional-details.html#." class="btn btn-inverse"> Follow</a> </div>
-                            </li>
-                          </ul>
-                        </div>
+                </div>
+
+                <!-- Support -->
+                <div id="support" class="tab-pane fade">
+                  <div class="profile-main">
+                    <h3>Support</h3>
+                    <div class="profile-in"> </div>
+                  </div>
+                </div>
+
+                <!-- Follows -->
+                <div id="folow" class="tab-pane fade">
+                  <div class="profile-main">
+                    <h3>Followers(6)</h3>
+                    <div class="profile-in">
+
+                      <!-- Follows -->
+                      <div class="followers-sec">
+                        <ul>
+                          <!-- Follows -->
+                          <li>
+                            <div class="inside">
+                              <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt=""
+                                  class="img-responsive"> </div>
+                              <h4>Webicode</h4>
+                              <p> <span>Member Since:</span> March 2019</p>
+                              <a href="professional-details.html#." class="btn btn-inverse"> Follow</a>
+                            </div>
+                          </li>
+
+                          <!-- Follows -->
+                          <li>
+                            <div class="inside">
+                              <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt=""
+                                  class="img-responsive"> </div>
+                              <h4>Webicode</h4>
+                              <p> <span>Member Since:</span> March 2019</p>
+                              <a href="professional-details.html#." class="btn btn-inverse"> Follow</a>
+                            </div>
+                          </li>
+
+                          <!-- Follows -->
+                          <li>
+                            <div class="inside">
+                              <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt=""
+                                  class="img-responsive"> </div>
+                              <h4>Webicode</h4>
+                              <p> <span>Member Since:</span> March 2019</p>
+                              <a href="professional-details.html#." class="btn btn-inverse"> Follow</a>
+                            </div>
+                          </li>
+
+                          <!-- Follows -->
+                          <li>
+                            <div class="inside">
+                              <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt=""
+                                  class="img-responsive"> </div>
+                              <h4>Webicode</h4>
+                              <p> <span>Member Since:</span> March 2019</p>
+                              <a href="professional-details.html#." class="btn btn-inverse"> Follow</a>
+                            </div>
+                          </li>
+
+                          <!-- Follows -->
+                          <li>
+                            <div class="inside">
+                              <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt=""
+                                  class="img-responsive"> </div>
+                              <h4>Webicode</h4>
+                              <p> <span>Member Since:</span> March 2019</p>
+                              <a href="professional-details.html#." class="btn btn-inverse"> Follow</a>
+                            </div>
+                          </li>
+
+                          <!-- Follows -->
+                          <li>
+                            <div class="inside">
+                              <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt=""
+                                  class="img-responsive"> </div>
+                              <h4>Webicode</h4>
+                              <p> <span>Member Since:</span> March 2019</p>
+                              <a href="professional-details.html#." class="btn btn-inverse"> Follow</a>
+                            </div>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>
-                  
-                  <!-- Following -->
-                  <div id="folowng" class="tab-pane fade">
-                    <div class="profile-main">
-                      <h3>Following</h3>
-                      <div class="profile-in"> 
-                        
-                        <!-- Follows -->
-                        <div class="followers-sec">
-                          <ul>
-                            <!-- Following -->
-                            <li>
-                              <div class="inside">
-                                <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt="" class="img-responsive"> </div>
-                                <h4>Webicode</h4>
-                                <p> <span>Member Since:</span> March 2019</p>
-                                <a href="professional-details.html#." class="btn btn-inverse"> Following</a> </div>
-                            </li>
-                            
-                            <!-- Following -->
-                            <li>
-                              <div class="inside">
-                                <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt="" class="img-responsive"> </div>
-                                <h4>Webicode</h4>
-                                <p> <span>Member Since:</span> March 2019</p>
-                                <a href="professional-details.html#." class="btn btn-inverse"> Following</a> </div>
-                            </li>
-                            
-                            <!-- Following -->
-                            <li>
-                              <div class="inside">
-                                <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt="" class="img-responsive"> </div>
-                                <h4>Webicode</h4>
-                                <p> <span>Member Since:</span> March 2019</p>
-                                <a href="professional-details.html#." class="btn btn-inverse"> Following</a> </div>
-                            </li>
-                            
-                            <!-- Following -->
-                            <li>
-                              <div class="inside">
-                                <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt="" class="img-responsive"> </div>
-                                <h4>Webicode</h4>
-                                <p> <span>Member Since:</span> March 2019</p>
-                                <a href="professional-details.html#." class="btn btn-inverse"> Following</a> </div>
-                            </li>
-                            
-                            <!-- Following -->
-                            <li>
-                              <div class="inside">
-                                <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt="" class="img-responsive"> </div>
-                                <h4>Webicode</h4>
-                                <p> <span>Member Since:</span> March 2019</p>
-                                <a href="professional-details.html#." class="btn btn-inverse"> Following</a> </div>
-                            </li>
-                          </ul>
-                        </div>
+                </div>
+
+                <!-- Following -->
+                <div id="folowng" class="tab-pane fade">
+                  <div class="profile-main">
+                    <h3>Following</h3>
+                    <div class="profile-in">
+
+                      <!-- Follows -->
+                      <div class="followers-sec">
+                        <ul>
+                          <!-- Following -->
+                          <li>
+                            <div class="inside">
+                              <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt=""
+                                  class="img-responsive"> </div>
+                              <h4>Webicode</h4>
+                              <p> <span>Member Since:</span> March 2019</p>
+                              <a href="professional-details.html#." class="btn btn-inverse"> Following</a>
+                            </div>
+                          </li>
+
+                          <!-- Following -->
+                          <li>
+                            <div class="inside">
+                              <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt=""
+                                  class="img-responsive"> </div>
+                              <h4>Webicode</h4>
+                              <p> <span>Member Since:</span> March 2019</p>
+                              <a href="professional-details.html#." class="btn btn-inverse"> Following</a>
+                            </div>
+                          </li>
+
+                          <!-- Following -->
+                          <li>
+                            <div class="inside">
+                              <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt=""
+                                  class="img-responsive"> </div>
+                              <h4>Webicode</h4>
+                              <p> <span>Member Since:</span> March 2019</p>
+                              <a href="professional-details.html#." class="btn btn-inverse"> Following</a>
+                            </div>
+                          </li>
+
+                          <!-- Following -->
+                          <li>
+                            <div class="inside">
+                              <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt=""
+                                  class="img-responsive"> </div>
+                              <h4>Webicode</h4>
+                              <p> <span>Member Since:</span> March 2019</p>
+                              <a href="professional-details.html#." class="btn btn-inverse"> Following</a>
+                            </div>
+                          </li>
+
+                          <!-- Following -->
+                          <li>
+                            <div class="inside">
+                              <div class="thumb"> <img src="{% static 'images/comp-img.png' %}" alt=""
+                                  class="img-responsive"> </div>
+                              <h4>Webicode</h4>
+                              <p> <span>Member Since:</span> March 2019</p>
+                              <a href="professional-details.html#." class="btn btn-inverse"> Following</a>
+                            </div>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>
@@ -678,67 +795,79 @@
           </div>
         </div>
       </div>
-    </section>
-    
-    <!-- WHAT OUR USERS SAY -->
-    <section class="bg-white padding-top-100 padding-bottom-100">
-      <div class="container"> 
-        
-        <!-- Heading Block -->
-        <div class="heading-block text-center">
-          <h2>Review About {{profile.name}}</h2>
-        </div>
-        
-        <!-- Testimonial Style 4 -->
-        <div class="testimonial style-4">
-          <div class="testi"> 
-            <!-- Testi Slides With Image -->
-            <div class="testi-slide"> 
-              
-              <!-- Slides -->
-              <div> 
-                <!-- Avatar -->
-                <div class="avatar"><img class="img-circle img-responsive" src="{% static 'images/testimonial-2a.png' %}" alt=" "></div>
-                <div class="text-in">
-                  <p>“There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, 
-                    or randomised words which don't look even slightly believable.” </p>
-                  <h6>WHITE SHADOW WALKER</h6>
-                  <span> CEO/FOUNDER DELL</span> 
-                  <!-- Stars -->
-                  <div class="rating-stars"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i></div>
-                </div>
+    </div>
+  </section>
+
+  <!-- WHAT OUR USERS SAY -->
+  <section class="bg-white padding-top-100 padding-bottom-100">
+    <div class="container">
+
+      <!-- Heading Block -->
+      <div class="heading-block text-center">
+        <h2>Review About {{profile.name}}</h2>
+      </div>
+
+      <!-- Testimonial Style 4 -->
+      <div class="testimonial style-4">
+        <div class="testi">
+          <!-- Testi Slides With Image -->
+          <div class="testi-slide">
+
+            <!-- Slides -->
+            <div>
+              <!-- Avatar -->
+              <div class="avatar"><img class="img-circle img-responsive" src="{% static 'images/testimonial-2a.png' %}"
+                  alt=" "></div>
+              <div class="text-in">
+                <p>“There are many variations of passages of Lorem Ipsum available, but the majority have suffered
+                  alteration in some form, by injected humour,
+                  or randomised words which don't look even slightly believable.” </p>
+                <h6>WHITE SHADOW WALKER</h6>
+                <span> CEO/FOUNDER DELL</span>
+                <!-- Stars -->
+                <div class="rating-stars"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+                    class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i></div>
               </div>
-              
-              <!-- Slides -->
-              <div> 
-                <!-- Avatar -->
-                <div class="avatar"><img class="img-circle img-responsive" src="{% static 'images/testimonial-2b.png' %}" alt=" "></div>
-                <div class="text-in">
-                  <p>“There are many variations  but the majority have suffered alteration. but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.”</p>
-                  <h6>M_ADNAN</h6>
-                  <span> CEO/FOUNDER DELL</span> 
-                  <!-- Stars -->
-                  <div class="rating-stars"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i></div>
-                </div>
+            </div>
+
+            <!-- Slides -->
+            <div>
+              <!-- Avatar -->
+              <div class="avatar"><img class="img-circle img-responsive" src="{% static 'images/testimonial-2b.png' %}"
+                  alt=" "></div>
+              <div class="text-in">
+                <p>“There are many variations but the majority have suffered alteration. but the majority have suffered
+                  alteration in some form, by injected humour, or randomised words which don't look even slightly
+                  believable.”</p>
+                <h6>M_ADNAN</h6>
+                <span> CEO/FOUNDER DELL</span>
+                <!-- Stars -->
+                <div class="rating-stars"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+                    class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i></div>
               </div>
-              
-              <!-- Slides 1 -->
-              <div> 
-                <!-- Avatar -->
-                <div class="avatar"><img class="img-circle img-responsive" src="{% static 'images/testimonial-2c.png' %}" alt=" "></div>
-                <div class="text-in">
-                  <p>“There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, Alteration in some form randomised words which don't look even slightly believable.”</p>
-                  <h6>DAVID WALKER</h6>
-                  <span> CEO/FOUNDER DELL</span> 
-                  <!-- Stars -->
-                  <div class="rating-stars"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i></div>
-                </div>
+            </div>
+
+            <!-- Slides 1 -->
+            <div>
+              <!-- Avatar -->
+              <div class="avatar"><img class="img-circle img-responsive" src="{% static 'images/testimonial-2c.png' %}"
+                  alt=" "></div>
+              <div class="text-in">
+                <p>“There are many variations of passages of Lorem Ipsum available, but the majority have suffered
+                  alteration in some form, Alteration in some form randomised words which don't look even slightly
+                  believable.”</p>
+                <h6>DAVID WALKER</h6>
+                <span> CEO/FOUNDER DELL</span>
+                <!-- Stars -->
+                <div class="rating-stars"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+                    class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i></div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-  </div>
-  
+    </div>
+  </section>
+</div>
+
 {% endblock %}

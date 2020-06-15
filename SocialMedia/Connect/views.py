@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from .forms import *
 
+from django.db.models import Q
+
 
 def Login(request):
     if request.user.is_authenticated:
@@ -53,13 +55,35 @@ def UserProfile(request, Username):
     usr=User.objects.filter(username=Username)
     if not usr:
         return redirect("UserProfile", request.user.username)
+    connection=None
+    if request.user.username != Username:
+        user1=User.objects.get(username=Username)
+        user2=User.objects.get(username=request.user.username)
+
+        UData1=UserDataBase.objects.get(usr=user1)
+        UData2 = UserDataBase.objects.get(usr=user2)
+
+        connection=Connections.objects.filter(Q(sender=UData1,receiver=UData2)|Q(sender=UData2,receiver=UData1))
+
+        if len(connection)!=0:
+            # print(connection)
+            connection=connection[0]
+            # print(connection)
+
+
+
+    # sent_con=Connections.objects.filter(sender=request.user.id)
+    # received_con=Connections.objects.filter(receiver=request.user.id)
+    # print(sent_con,received_con)
+    # sent_
+
     usr=usr[0]
     User_Detail = UserDataBase.objects.get(usr=usr)
-    print(User_Detail)
+    # print(User_Detail)
 
 
 
-    return render(request, "user_details.html",{'profile':User_Detail})
+    return render(request, "user_details.html",{'profile':User_Detail,'connection':connection})
 
 def Update_User_Details(request, Username):
     if not request.user.is_authenticated:
@@ -78,5 +102,25 @@ def Update_User_Details(request, Username):
     di={'profile': User_Detail,'form':form}
 
     return render(request, "edit_user_details.html",di)
+
+def all_profession(request):
+    all_users=UserDataBase.objects.all()
+    di={'all_users':all_users}
+    return render(request,'professionals.html',di)
+
+def manage_your_connection(request,action,u_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    # print(action,u_id)
+    if action=="Send_Request":
+        sender_user=User.objects.get(username=request.user.username)
+        sender=UserDataBase.objects.get(usr=sender_user)
+        receiver=UserDataBase.objects.get(id=u_id)
+        Connections.objects.create(sender=sender,receiver=receiver)
+        return redirect('UserProfile',receiver.usr.username)
+    return HttpResponse("<h1>manage_your_connection</h1>")
+
+
+
 
 
