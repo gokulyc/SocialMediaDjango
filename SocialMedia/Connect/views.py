@@ -103,9 +103,61 @@ def Update_User_Details(request, Username):
 
     return render(request, "edit_user_details.html",di)
 
-def all_profession(request):
-    all_users=UserDataBase.objects.all()
-    di={'all_users':all_users}
+def all_profession(request, d_type):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    logged_in_user=User.objects.get(username=request.user.username)
+    me=UserDataBase.objects.get(usr=logged_in_user)
+    # receive_requests=Connections.objects.filter(receiver=me,status='Sent')
+    # Sent_Request= Connections.objects.filter(sender=me,status='Sent')
+    # my_friends= Connections.objects.filter(Q(sender=me,status='friend')|Q(receiver=me,status='friend')).order_by('-date')
+    data=[]
+    if d_type== 'all':
+        print(d_type)
+        data = UserDataBase.objects.all()
+        print(data)
+    elif d_type== 'requests':
+        print(d_type)
+        requests=Connections.objects.filter(receiver=me,status='Sent')
+        user_data=[]
+        for con in requests:
+            ud=UserDataBase.objects.get(id= con.sender.id)
+            user_data.append(ud)
+        data = user_data
+        print(data)
+    elif d_type== 'sent':
+        print(d_type)
+        sent = Connections.objects.filter(sender=me, status='Sent')
+        user_data=[]
+        for con in sent:
+            ud=UserDataBase.objects.get(id= con.receiver.id)
+            user_data.append(ud)
+        data=user_data
+        print(data)
+    elif d_type== 'friends':
+        print(d_type)
+        friendscon = Connections.objects.filter(Q(sender=me, status='friend')|Q(receiver=me, status='friend')).order_by('-date')
+        user_data = []
+        for con in friendscon:
+            ud = UserDataBase.objects.get(id=con.sender.id)
+            if ud.id != me:
+                user_data.append(ud)
+            ud = UserDataBase.objects.get(id=con.receiver.id)
+            if ud.id != me:
+                user_data.append(ud)
+            print(ud)
+            user_data.append(ud)
+        data = user_data
+        # print(data)
+
+        # data=Connections.objects.filter(Q(sender=me,status='friend')|Q(receiver=me,status='friend')).order_by('-date')
+
+
+    # all_users=UserDataBase.objects.all()
+    di={
+        'all_users':data,'d_type':d_type
+    }
     return render(request,'professionals.html',di)
 
 def manage_your_connection(request,action,u_id):
@@ -118,6 +170,24 @@ def manage_your_connection(request,action,u_id):
         receiver=UserDataBase.objects.get(id=u_id)
         Connections.objects.create(sender=sender,receiver=receiver)
         return redirect('UserProfile',receiver.usr.username)
+    if action=='Accept_Request' or action == "Reject_Request":
+        receive_user = User.objects.get(username=request.user.username)
+        receiver = UserDataBase.objects.get(usr=receive_user)
+        sender = UserDataBase.objects.get(id=u_id)
+        con = Connections.objects.filter(sender=sender, receiver=receiver)
+        if con:
+            for c in con:
+                if action=="Accept_Request":
+                    c.status="friend"
+                    c.save()
+                elif action=="Reject_Request":
+                    c.status="rejected"
+                    c.save()
+        return redirect('professional', "all")
+
+
+
+
     return HttpResponse("<h1>manage_your_connection</h1>")
 
 

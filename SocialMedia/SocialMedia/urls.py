@@ -28,7 +28,7 @@ urlpatterns = [
     path('logout/', cview.logout_page, name="logoutpage"),
 
 
-    path('all_professional/', cview.all_profession, name = "professional"),
+    path('all_professional/<str:d_type>/', cview.all_profession, name = "professional"),
     path('connection/<str:action>/<int:u_id>/', cview.manage_your_connection, name = "connections"),
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

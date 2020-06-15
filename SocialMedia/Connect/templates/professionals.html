@@ -2,7 +2,12 @@
 
 {% load  static%}
 {% block content%}
-
+<script src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
+<script>
+$(document).ready(function(){
+  $(".{{d_type}}").addClass("selected");
+  });
+</script>
   
   <!-- Content -->
   <div id="content"> 
@@ -32,12 +37,11 @@
               <!-- filter Btns -->
               <ul class="cd-filters">
                 <li class="placeholder"> <a data-type="all" href="#0">All</a> </li>
-                <li class="filter"><a class="selected" href="#0" data-type="all">All</a></li>
-                <li class="filter" data-filter=".pro"><a href="#0" data-type="pro">UI/UX</a></li>
-                <li class="filter" data-filter=".freelance"><a href="#0" data-type="color-1">Front-end Developers</a></li>
-                <li class="filter" data-filter=".coporate"><a href="#0" data-type="coporate">Freelancers</a></li>
-                <li class="filter" data-filter=".indui"><a href="#0" data-type="color-1">Designer</a></li>
-                <li class="filter" data-filter=".agency"><a href="#0" data-type="agency">Agency</a></li>
+                <li class="filter"><a class="all" href="{% url 'professional' 'all'%}" data-type="all">All</a></li>
+                <li class="filter" data-filter=".requests"><a class="requests" href="{% url 'professional' 'requests'%}" data-type="pro">Requests</a></li>
+                <li class="filter" data-filter=".sent"><a class="sent" href="{% url 'professional' 'sent'%}" data-type="color-1">Sent</a></li>
+                <li class="filter" data-filter=".friends"><a class="friends" href="{% url 'professional' 'friends'%}" data-type="coporate">Friends</a></li>
+
               </ul>
               
               <!-- Search -->
@@ -86,9 +90,11 @@
           </div>
           <section class="cd-gallery">
             <ul>
-              {% for p in all_users%}
+<!--              all -->
+              {% if d_type == 'all' %}
+              {% for p in all_users %}
               {%if p.usr.username != request.user.username%}
-              <li class="mix freelance  indui ">
+              <li class="mix all ">
                 <div class="team-inside">
                   <div class="img-sec"> <img src="{{ p.image.url }}" class="img-responsive" alt="{{p.name}}" >
                     <div class="hover-over">
@@ -102,6 +108,67 @@
               </li>
               {%endif%}
               {%endfor%}
+              {% endif %}
+<!--              requests -->
+              {% if d_type == 'requests' %}
+              {% for p in all_users %}
+              {%if p.usr.username != request.user.username%}
+              <li class="mix all ">
+                <div class="team-inside">
+                  <div class="img-sec"> <img src="{{ p.image.url }}" class="img-responsive" alt="{{p.name}}" >
+                    <div class="hover-over">
+                      <div class="position-center-center"> <a href="{% url 'connections' 'Accept_Request' p.id %}" class="btn">Accept</a>
+                        <a href="{% url 'connections' 'Reject_Request' p.id %}" class="btn">Reject</a> </div>
+                    </div>
+                  </div>
+                  <div class="txt-sec">
+                    <h5><a href="#."> {{p.name}} </a></h5>
+                    <span>{{p.profile_title}}</span> <span><i class="fa fa-map-marker"></i>{{p.location}}</span> </div>
+                </div>
+              </li>
+              {%endif%}
+              {%endfor%}
+              {% endif %}
+<!--              sent-->
+              {% if d_type == 'sent' %}
+              {% for p in all_users %}
+              {%if p.usr.username != request.user.username%}
+              <li class="mix all ">
+                <div class="team-inside">
+                  <div class="img-sec"> <img src="{{ p.image.url }}" class="img-responsive" alt="{{p.name}}" >
+                    <div class="hover-over">
+                      <div class="position-center-center"> <a href="#" class="btn">Cancel</a>
+                        <a href="{% url 'UserProfile' p.usr.username %}" class="btn">View Profile</a> </div>
+                    </div>
+                  </div>
+                  <div class="txt-sec">
+                    <h5><a href="#."> {{p.name}} </a></h5>
+                    <span>{{p.profile_title}}</span> <span><i class="fa fa-map-marker"></i>{{p.location}}</span> </div>
+                </div>
+              </li>
+              {%endif%}
+              {%endfor%}
+              {% endif %}
+<!--              friends-->
+              {% if d_type == 'friends' %}
+              {% for p in all_users %}
+              {%if p.usr.username != request.user.username%}
+              <li class="mix all ">
+                <div class="team-inside">
+                  <div class="img-sec"> <img src="{{ p.image.url }}" class="img-responsive" alt="{{p.name}}" >
+                    <div class="hover-over">
+                      <div class="position-center-center"> <a href="#" class="btn">UnFollow</a>
+                        <a href="{% url 'UserProfile' p.usr.username %}" class="btn">View Profile</a> </div>
+                    </div>
+                  </div>
+                  <div class="txt-sec">
+                    <h5><a href="#."> {{p.name}} </a></h5>
+                    <span>{{p.profile_title}}</span> <span><i class="fa fa-map-marker"></i>{{p.location}}</span> </div>
+                </div>
+              </li>
+              {%endif%}
+              {%endfor%}
+              {% endif %}
             </ul>
             <div class="clearfix"></div>
             
@@ -137,7 +204,7 @@
       <div class="clearfix"></div>
     </section>
   </div>
-<script src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
+
   <script src="{% static 'js/jquery.mixitup.min.js'%}"></script>
 
  {% endblock %}

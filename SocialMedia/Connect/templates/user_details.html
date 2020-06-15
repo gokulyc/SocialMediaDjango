@@ -57,7 +57,7 @@
                   <!--                    <a href="professional-details.html#."><i class="far fa-bookmark"></i> </a>-->
 
                   {% if profile.email%}
-                  <a href="{% url profile.email}}"><i class="far fa-envelope"></i> </a>
+                  <a href="mailto:{% url profile.email}}"><i class="far fa-envelope"></i> </a>
                   {%endif%}
                   {% if profile.usr.username != request.user.username %}
                     {% if connection %}
