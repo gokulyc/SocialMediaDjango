@@ -1,0 +1,105 @@
+{%extends 'base.html'%}
+
+
+{% block content%}
+  <!-- Content -->
+  <div id="content"> 
+    
+    <!-- Login Register -->
+    <section class="login-register padding-top-100 padding-bottom-150">
+      <div class="container"> 
+        
+        <!-- Payments Steps -->
+        <div class="inside-log-reg">
+              
+              <!-- Nav Tabs -->
+              <ul class="nav" id="myTab" role="tablist">
+                <li><h3 class="">Welcome {{ request.user.userdatabase_set.first.name }} !!!</h3></li>
+                <li class=" active"> <a class="nav-link text-info " id="reg-tab" data-toggle="tab" href="#reg" role="tab" aria-selected="yes">Register Company</a> </li>
+              </ul>
+              
+              <!-- Login Register Inside -->
+              <div class="tab-content" id="myTabContent"> 
+                
+                <!-- Login -->
+
+                
+                <!-- Register -->
+                <div class="tab-pane active" id="reg" role="tabpanel" aria-labelledby="reg-tab">
+                  <form action="{% url 'register' %}" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                       <center><img id="output" style="border-radius: 50%;" width="200" height="200" /></center>
+                    <ul class="row">
+                      
+                      <!-- Name -->
+                      <li class="col-md-6">
+                        <label> Company Name *
+                          {{ form.name }}
+                        </label>
+                      </li>
+                      
+                      <!-- Email Address -->
+                      <li class="col-md-6">
+                        <label> Email Address *
+                          {{ form.email }}
+                           </label>
+                      </li>
+                      
+                      <!-- Contact Numbe -->
+                      <li class="col-md-6">
+                        <label> Contact Number *
+                          {{form.number}}
+                        </label>
+                      </li>
+
+                      <!-- Password -->
+                      <li class="col-md-6">
+                        <label> Password *
+                          <input type="password" name="ps" value="" placeholder="" class="form-control">
+                        </label>
+                      </li>
+                      <li class="col-md-12">
+                        <label>Company Title *
+                          {{ form.title }}
+                        </label>
+                      </li>
+
+                        <!-- Name -->
+                      <li class="col-md-6">
+                        <label> Company Website *
+                         {{ form.website }}
+                        </label>
+                      </li>
+                      <!-- Password -->
+                      <li class="col-md-6">
+                        <label>Company Logo *
+                          {{ form.logo }}
+                        </label>
+                      </li>
+
+
+
+
+                      
+                      <!-- LOGIN -->
+                      <li class="col-md-12 text-center">
+                        <button type="submit" class="btn">Register</button>
+                      </li>
+                    </ul>
+                  </form>
+                </div>
+
+
+              </div>
+         
+        </div>
+      </div>
+    </section>
+  </div>
+<script>
+var loadFile = function(event) {
+	var image = document.getElementById('output');
+	image.src = URL.createObjectURL(event.target.files[0]);
+};
+</script>
+  {%endblock%}

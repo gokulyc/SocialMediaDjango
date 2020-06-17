@@ -36,7 +36,15 @@
               <div class="user-in container">
                 <div class="pro-avatar "> <img src="{{ profile.image.url }}" alt="profile image"
                     class="img-responsive  "> </div>
-                <h1>{{profile.name}} <a class="veri" href="" data-toggle="tooltip" data-placement="top"
+
+
+
+                <h1>{{profile.name}}
+                  {% if profile.usr.username == request.user.username %}
+                  <a " class="ml-3" href="{% url 'registercom' %}"
+                    data-toggle="tooltip" data-placement="top" title="Register your company"><i style="font-size:21px;" class="fas fa-building"></i> </a>
+                  {% endif %}
+                  <a class="veri" href="" data-toggle="tooltip" data-placement="top"
                     title="Verified Member"> <i class="fa fa-check"></i> </a> </h1>
                 <h6>{{profile.title}}</h6>
                 <div class="social-links">
@@ -61,8 +69,7 @@
                   {%endif%}
                   {% if profile.usr.username != request.user.username %}
                     {% if connection %}
-                    <a  class="float-right margin-right-0"
-                    data-toggle="tooltip" data-placement="top" title="Pending"><i class="fas fa-user-plus"></i> </a>
+
                     {%else%}
                   <a href=" {% url 'connections' 'Send_Request' profile.id %}" class="float-right margin-right-0"
                     data-toggle="tooltip" data-placement="top" title="Follow"><i class="fas fa-user-plus"></i> </a>

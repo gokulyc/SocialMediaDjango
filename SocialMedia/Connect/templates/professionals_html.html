@@ -37,10 +37,10 @@ $(document).ready(function(){
               <!-- filter Btns -->
               <ul class="cd-filters">
                 <li class="placeholder"> <a data-type="all" href="#0">All</a> </li>
-                <li class="filter"><a class="all" href="{% url 'professional' 'all'%}" data-type="all">All</a></li>
-                <li class="filter" data-filter=".requests"><a class="requests" href="{% url 'professional' 'requests'%}" data-type="pro">Requests ({{con_req}})</a></li>
-                <li class="filter" data-filter=".sent"><a class="sent" href="{% url 'professional' 'sent'%}" data-type="color-1">Sent ({{con_sent}})</a></li>
-                <li class="filter" data-filter=".friends"><a class="friends" href="{% url 'professional' 'friends'%}" data-type="coporate">Friends ({{con_friend}})</a></li>
+                <li class="filter"><a class="all" href="{% url 'pro_html' 'all'%}" data-type="all">All</a></li>
+                <li class="filter" data-filter=".requests"><a class="requests" href="{% url 'pro_html' 'requests'%}" data-type="pro">Requests ({{con_req}})</a></li>
+                <li class="filter" data-filter=".sent"><a class="sent" href="{% url 'pro_html' 'sent'%}" data-type="color-1">Sent ({{con_sent}})</a></li>
+                <li class="filter" data-filter=".friends"><a class="friends" href="{% url 'pro_html' 'friends'%}" data-type="coporate">Friends ({{con_friend}})</a></li>
 
               </ul>
               
@@ -89,7 +89,9 @@ $(document).ready(function(){
             </div>
           </div>
           <section class="cd-gallery">
+               {{test}}
             <ul>
+
 <!--              all -->
               {% if d_type == 'all' %}
               {% for p in all_users %}

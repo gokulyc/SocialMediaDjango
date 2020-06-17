@@ -109,14 +109,21 @@ def all_profession(request, d_type):
 
     logged_in_user=User.objects.get(username=request.user.username)
     me=UserDataBase.objects.get(usr=logged_in_user)
-    # receive_requests=Connections.objects.filter(receiver=me,status='Sent')
-    # Sent_Request= Connections.objects.filter(sender=me,status='Sent')
-    # my_friends= Connections.objects.filter(Q(sender=me,status='friend')|Q(receiver=me,status='friend')).order_by('-date')
+
+    # count
+
+    con_req = len(Connections.objects.filter(receiver=me, status='Sent'))
+    con_sent= len(Connections.objects.filter(sender=me, status='Sent'))
+    con_friend=len(Connections.objects.filter(Q(sender=me, status='friend')|Q(receiver=me, status='friend')).order_by('-date'))
+
+    # count
+
     data=[]
     if d_type== 'all':
         print(d_type)
         data = UserDataBase.objects.all()
-        print(data)
+        d_num=len(data)
+        # print(data)
     elif d_type== 'requests':
         print(d_type)
         requests=Connections.objects.filter(receiver=me,status='Sent')
@@ -125,7 +132,8 @@ def all_profession(request, d_type):
             ud=UserDataBase.objects.get(id= con.sender.id)
             user_data.append(ud)
         data = user_data
-        print(data)
+        d_num = len(data)
+        # print(data)
     elif d_type== 'sent':
         print(d_type)
         sent = Connections.objects.filter(sender=me, status='Sent')
@@ -134,31 +142,97 @@ def all_profession(request, d_type):
             ud=UserDataBase.objects.get(id= con.receiver.id)
             user_data.append(ud)
         data=user_data
-        print(data)
+        d_num = len(data)
+        # print(data)
     elif d_type== 'friends':
         print(d_type)
         friendscon = Connections.objects.filter(Q(sender=me, status='friend')|Q(receiver=me, status='friend')).order_by('-date')
+        print(friendscon)
         user_data = []
         for con in friendscon:
+            # if con.sender==me
             ud = UserDataBase.objects.get(id=con.sender.id)
-            if ud.id != me:
+            if ud.id != me.id:
                 user_data.append(ud)
             ud = UserDataBase.objects.get(id=con.receiver.id)
-            if ud.id != me:
+            if ud.id != me.id:
                 user_data.append(ud)
-            print(ud)
-            user_data.append(ud)
+            # print(ud)
         data = user_data
+        d_num = len(data)
         # print(data)
-
         # data=Connections.objects.filter(Q(sender=me,status='friend')|Q(receiver=me,status='friend')).order_by('-date')
-
-
     # all_users=UserDataBase.objects.all()
     di={
-        'all_users':data,'d_type':d_type
+        'all_users':data,'d_type':d_type,'d_num':d_num,'con_req':con_req,'con_sent':con_sent,'con_friend':con_friend,
     }
     return render(request,'professionals.html',di)
+
+def all_profession_html(request, d_type):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    test=''
+
+    logged_in_user=User.objects.get(username=request.user.username)
+    me=UserDataBase.objects.get(usr=logged_in_user)
+    test=str(me.sender.all())+str(me.receiver.all())
+    # count
+
+    con_req = len(Connections.objects.filter(receiver=me, status='Sent'))
+    con_sent= len(Connections.objects.filter(sender=me, status='Sent'))
+    con_friend=len(Connections.objects.filter(Q(sender=me, status='friend')|Q(receiver=me, status='friend')).order_by('-date'))
+
+    # count
+
+    data=[]
+    if d_type== 'all':
+        print(d_type)
+        data = UserDataBase.objects.all()
+        d_num=len(data)
+        # print(data)
+    elif d_type== 'requests':
+        print(d_type)
+        requests=Connections.objects.filter(receiver=me,status='Sent')
+        user_data=[]
+        for con in requests:
+            ud=UserDataBase.objects.get(id= con.sender.id)
+            user_data.append(ud)
+        data = user_data
+        d_num = len(data)
+        # print(data)
+    elif d_type== 'sent':
+        print(d_type)
+        sent = Connections.objects.filter(sender=me, status='Sent')
+        user_data=[]
+        for con in sent:
+            ud=UserDataBase.objects.get(id= con.receiver.id)
+            user_data.append(ud)
+        data=user_data
+        d_num = len(data)
+        # print(data)
+    elif d_type== 'friends':
+        print(d_type)
+        friendscon = Connections.objects.filter(Q(sender=me, status='friend')|Q(receiver=me, status='friend')).order_by('-date')
+        print(friendscon)
+        user_data = []
+        for con in friendscon:
+            # if con.sender==me
+            ud = UserDataBase.objects.get(id=con.sender.id)
+            if ud.id != me.id:
+                user_data.append(ud)
+            ud = UserDataBase.objects.get(id=con.receiver.id)
+            if ud.id != me.id:
+                user_data.append(ud)
+            # print(ud)
+        data = user_data
+        d_num = len(data)
+        # print(data)
+        # data=Connections.objects.filter(Q(sender=me,status='friend')|Q(receiver=me,status='friend')).order_by('-date')
+    # all_users=UserDataBase.objects.all()
+    di={
+        'all_users':data,'d_type':d_type,'d_num':d_num,'con_req':con_req,'con_sent':con_sent,'con_friend':con_friend,'test':test
+    }
+    return render(request,'professionals_html.html',di)
 
 def manage_your_connection(request,action,u_id):
     if not request.user.is_authenticated:
@@ -189,6 +263,21 @@ def manage_your_connection(request,action,u_id):
 
 
     return HttpResponse("<h1>manage_your_connection</h1>")
+
+def Register_Company(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    # loggedin_user = request.user.username
+    # if Username != loggedin_user:
+    #     return redirect("UserProfile", loggedin_user)
+    # usr = User.objects.filter(username=Username)
+    # usr = usr[0]
+    # User_Detail = UserDataBase.objects.get(usr=usr)
+
+    form = RegisterCompany_Form(request.POST or None, request.FILES or None)
+
+    di={'form':form}
+    return render(request,'register_company.html',di)
 
 
 

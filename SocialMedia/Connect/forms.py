@@ -32,3 +32,18 @@ class Edit_User_Form(forms.ModelForm):
             "profile_title":forms.TextInput(attrs={"class": "form-control", }),
 
         }
+
+class RegisterCompany_Form(forms.ModelForm):
+    class Meta:
+        model = UserDataBase
+        exclude = ("usr",)
+        widgets = {
+            "name":forms.TextInput(attrs={"class":"form-control", }),
+            "email":forms.EmailInput(attrs={"class":"form-control", }),
+            "number":forms.NumberInput(attrs={"class":"form-control", }),
+            "logo":forms.FileInput(attrs={"class":"form-control","onchange":"loadFile(event)" }),
+            "website": forms.TextInput(attrs={"class": "form-control", }),
+            "title": forms.TextInput(attrs={"class": "form-control", }),
+            "address": forms.TextInput(attrs={"class": "form-control", }),
+
+        }

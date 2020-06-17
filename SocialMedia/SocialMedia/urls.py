@@ -29,6 +29,8 @@ urlpatterns = [
 
 
     path('all_professional/<str:d_type>/', cview.all_profession, name = "professional"),
+    path('all_professional_html/<str:d_type>/', cview.all_profession_html, name = "pro_html"),
     path('connection/<str:action>/<int:u_id>/', cview.manage_your_connection, name = "connections"),
+    path('register/company/', cview.Register_Company, name = "registercom"),
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
