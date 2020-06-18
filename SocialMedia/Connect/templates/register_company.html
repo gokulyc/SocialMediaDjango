@@ -1,5 +1,5 @@
 {%extends 'base.html'%}
-
+{% load static%}
 
 {% block content%}
   <!-- Content -->
@@ -26,7 +26,7 @@
                 
                 <!-- Register -->
                 <div class="tab-pane active" id="reg" role="tabpanel" aria-labelledby="reg-tab">
-                  <form action="{% url 'register' %}" method="post" enctype="multipart/form-data">
+                  <form action="{% url 'registercom' %}" method="post" enctype="multipart/form-data">
                       {% csrf_token %}
                        <center><img id="output" style="border-radius: 50%;" width="200" height="200" /></center>
                     <ul class="row">
@@ -44,7 +44,13 @@
                           {{ form.email }}
                            </label>
                       </li>
-                      
+
+                      <li class="col-md-6">
+                        <label>Company Title *
+                          {{ form.title }}
+                        </label>
+                      </li>
+
                       <!-- Contact Numbe -->
                       <li class="col-md-6">
                         <label> Contact Number *
@@ -52,36 +58,39 @@
                         </label>
                       </li>
 
-                      <!-- Password -->
+                      <!-- address -->
                       <li class="col-md-6">
-                        <label> Password *
-                          <input type="password" name="ps" value="" placeholder="" class="form-control">
-                        </label>
-                      </li>
-                      <li class="col-md-12">
-                        <label>Company Title *
-                          {{ form.title }}
+                        <label> Address *
+                          {{ form.address}}
                         </label>
                       </li>
 
-                        <!-- Name -->
+                        <!-- company website -->
                       <li class="col-md-6">
                         <label> Company Website *
                          {{ form.website }}
                         </label>
                       </li>
-                      <!-- Password -->
-                      <li class="col-md-6">
+
+                      <li class="col-md-12">
+                        <label>Google Map Embed Code *
+                          {{ form.map_embed}}
+                        </label>
+                      </li>
+                      <!-- Logo -->
+                      <li class=" col-md-3">
+
+                      </li>
+                      <li class=" col-md-6">
                         <label>Company Logo *
                           {{ form.logo }}
                         </label>
                       </li>
+                      <li class=" col-md-3">
 
+                      </li>
 
-
-
-                      
-                      <!-- LOGIN -->
+                      <!-- Register -->
                       <li class="col-md-12 text-center">
                         <button type="submit" class="btn">Register</button>
                       </li>

@@ -17,15 +17,16 @@ def Login(request):
     if request.method == "POST":
         un = request.POST["un"]
         ps = request.POST["ps"]
-        usr = authenticate(username = un, password = ps)
+        usr = authenticate(username=un, password=ps)
         if usr != None:
             login(request, usr)
             return redirect("UserProfile", usr.username)
         error = True
     Dict = {
-        "error":error, "form":form
+        "error": error, "form": form
     }
     return render(request, "login_register.html", Dict)
+
 
 def logout_page(request):
     logout(request)
@@ -52,101 +53,95 @@ def UserProfile(request, Username):
     if not request.user.is_authenticated:
         return redirect('login')
 
-    usr=User.objects.filter(username=Username)
+    usr = User.objects.filter(username=Username)
     if not usr:
         return redirect("UserProfile", request.user.username)
-    connection=None
+    connection = None
     if request.user.username != Username:
-        user1=User.objects.get(username=Username)
-        user2=User.objects.get(username=request.user.username)
+        user1 = User.objects.get(username=Username)
+        user2 = User.objects.get(username=request.user.username)
 
-        UData1=UserDataBase.objects.get(usr=user1)
+        UData1 = UserDataBase.objects.get(usr=user1)
         UData2 = UserDataBase.objects.get(usr=user2)
 
-        connection=Connections.objects.filter(Q(sender=UData1,receiver=UData2)|Q(sender=UData2,receiver=UData1))
+        connection = Connections.objects.filter(Q(sender=UData1, receiver=UData2) | Q(sender=UData2, receiver=UData1))
 
-        if len(connection)!=0:
+        if len(connection) != 0:
             # print(connection)
-            connection=connection[0]
-            # print(connection)
+            connection = connection[0]
 
-
-
-    # sent_con=Connections.objects.filter(sender=request.user.id)
-    # received_con=Connections.objects.filter(receiver=request.user.id)
-    # print(sent_con,received_con)
-    # sent_
-
-    usr=usr[0]
+    usr = usr[0]
     User_Detail = UserDataBase.objects.get(usr=usr)
     # print(User_Detail)
+    blog_form = UserBlog_Form()
+    return render(request, "user_details.html", {'profile': User_Detail, 'connection': connection,'blog_form':blog_form})
 
-
-
-    return render(request, "user_details.html",{'profile':User_Detail,'connection':connection})
 
 def Update_User_Details(request, Username):
     if not request.user.is_authenticated:
         return redirect('login')
-    loggedin_user=request.user.username
-    if Username!=loggedin_user:
-        return redirect("UserProfile",loggedin_user)
+    loggedin_user = request.user.username
+    if Username != loggedin_user:
+        return redirect("UserProfile", loggedin_user)
     usr = User.objects.filter(username=Username)
     usr = usr[0]
     User_Detail = UserDataBase.objects.get(usr=usr)
-    form=Edit_User_Form(request.POST or None,request.FILES or None,instance=User_Detail)
+    form = Edit_User_Form(request.POST or None, request.FILES or None, instance=User_Detail)
 
     if form.is_valid():
         form.save()
-        redirect("UserProfile",loggedin_user)
-    di={'profile': User_Detail,'form':form}
+        redirect("UserProfile", loggedin_user)
+    di = {'profile': User_Detail, 'form': form}
 
-    return render(request, "edit_user_details.html",di)
+    return render(request, "edit_user_details.html", di)
+
 
 def all_profession(request, d_type):
     if not request.user.is_authenticated:
         return redirect('login')
 
-    logged_in_user=User.objects.get(username=request.user.username)
-    me=UserDataBase.objects.get(usr=logged_in_user)
+    logged_in_user = User.objects.get(username=request.user.username)
+    me = UserDataBase.objects.get(usr=logged_in_user)
 
     # count
 
     con_req = len(Connections.objects.filter(receiver=me, status='Sent'))
-    con_sent= len(Connections.objects.filter(sender=me, status='Sent'))
-    con_friend=len(Connections.objects.filter(Q(sender=me, status='friend')|Q(receiver=me, status='friend')).order_by('-date'))
+    con_sent = len(Connections.objects.filter(sender=me, status='Sent'))
+    con_friend = len(
+        Connections.objects.filter(Q(sender=me, status='friend') | Q(receiver=me, status='friend')).order_by('-date'))
 
     # count
 
-    data=[]
-    if d_type== 'all':
+    data = []
+    if d_type == 'all':
         print(d_type)
         data = UserDataBase.objects.all()
-        d_num=len(data)
+        d_num = len(data)
         # print(data)
-    elif d_type== 'requests':
+    elif d_type == 'requests':
         print(d_type)
-        requests=Connections.objects.filter(receiver=me,status='Sent')
-        user_data=[]
+        requests = Connections.objects.filter(receiver=me, status='Sent')
+        user_data = []
         for con in requests:
-            ud=UserDataBase.objects.get(id= con.sender.id)
+            ud = UserDataBase.objects.get(id=con.sender.id)
             user_data.append(ud)
         data = user_data
         d_num = len(data)
         # print(data)
-    elif d_type== 'sent':
+    elif d_type == 'sent':
         print(d_type)
         sent = Connections.objects.filter(sender=me, status='Sent')
-        user_data=[]
+        user_data = []
         for con in sent:
-            ud=UserDataBase.objects.get(id= con.receiver.id)
+            ud = UserDataBase.objects.get(id=con.receiver.id)
             user_data.append(ud)
-        data=user_data
+        data = user_data
         d_num = len(data)
         # print(data)
-    elif d_type== 'friends':
+    elif d_type == 'friends':
         print(d_type)
-        friendscon = Connections.objects.filter(Q(sender=me, status='friend')|Q(receiver=me, status='friend')).order_by('-date')
+        friendscon = Connections.objects.filter(
+            Q(sender=me, status='friend') | Q(receiver=me, status='friend')).order_by('-date')
         print(friendscon)
         user_data = []
         for con in friendscon:
@@ -163,56 +158,60 @@ def all_profession(request, d_type):
         # print(data)
         # data=Connections.objects.filter(Q(sender=me,status='friend')|Q(receiver=me,status='friend')).order_by('-date')
     # all_users=UserDataBase.objects.all()
-    di={
-        'all_users':data,'d_type':d_type,'d_num':d_num,'con_req':con_req,'con_sent':con_sent,'con_friend':con_friend,
+    di = {
+        'all_users': data, 'd_type': d_type, 'd_num': d_num, 'con_req': con_req, 'con_sent': con_sent,
+        'con_friend': con_friend,
     }
-    return render(request,'professionals.html',di)
+    return render(request, 'professionals.html', di)
+
 
 def all_profession_html(request, d_type):
     if not request.user.is_authenticated:
         return redirect('login')
-    test=''
+    test = ''
 
-    logged_in_user=User.objects.get(username=request.user.username)
-    me=UserDataBase.objects.get(usr=logged_in_user)
-    test=str(me.sender.all())+str(me.receiver.all())
+    logged_in_user = User.objects.get(username=request.user.username)
+    me = UserDataBase.objects.get(usr=logged_in_user)
+    test = str(me.sender.all()) + str(me.receiver.all())
     # count
 
     con_req = len(Connections.objects.filter(receiver=me, status='Sent'))
-    con_sent= len(Connections.objects.filter(sender=me, status='Sent'))
-    con_friend=len(Connections.objects.filter(Q(sender=me, status='friend')|Q(receiver=me, status='friend')).order_by('-date'))
+    con_sent = len(Connections.objects.filter(sender=me, status='Sent'))
+    con_friend = len(
+        Connections.objects.filter(Q(sender=me, status='friend') | Q(receiver=me, status='friend')).order_by('-date'))
 
     # count
 
-    data=[]
-    if d_type== 'all':
+    data = []
+    if d_type == 'all':
         print(d_type)
         data = UserDataBase.objects.all()
-        d_num=len(data)
+        d_num = len(data)
         # print(data)
-    elif d_type== 'requests':
+    elif d_type == 'requests':
         print(d_type)
-        requests=Connections.objects.filter(receiver=me,status='Sent')
-        user_data=[]
+        requests = Connections.objects.filter(receiver=me, status='Sent')
+        user_data = []
         for con in requests:
-            ud=UserDataBase.objects.get(id= con.sender.id)
+            ud = UserDataBase.objects.get(id=con.sender.id)
             user_data.append(ud)
         data = user_data
         d_num = len(data)
         # print(data)
-    elif d_type== 'sent':
+    elif d_type == 'sent':
         print(d_type)
         sent = Connections.objects.filter(sender=me, status='Sent')
-        user_data=[]
+        user_data = []
         for con in sent:
-            ud=UserDataBase.objects.get(id= con.receiver.id)
+            ud = UserDataBase.objects.get(id=con.receiver.id)
             user_data.append(ud)
-        data=user_data
+        data = user_data
         d_num = len(data)
         # print(data)
-    elif d_type== 'friends':
+    elif d_type == 'friends':
         print(d_type)
-        friendscon = Connections.objects.filter(Q(sender=me, status='friend')|Q(receiver=me, status='friend')).order_by('-date')
+        friendscon = Connections.objects.filter(
+            Q(sender=me, status='friend') | Q(receiver=me, status='friend')).order_by('-date')
         print(friendscon)
         user_data = []
         for con in friendscon:
@@ -229,57 +228,95 @@ def all_profession_html(request, d_type):
         # print(data)
         # data=Connections.objects.filter(Q(sender=me,status='friend')|Q(receiver=me,status='friend')).order_by('-date')
     # all_users=UserDataBase.objects.all()
-    di={
-        'all_users':data,'d_type':d_type,'d_num':d_num,'con_req':con_req,'con_sent':con_sent,'con_friend':con_friend,'test':test
+    di = {
+        'all_users': data, 'd_type': d_type, 'd_num': d_num, 'con_req': con_req, 'con_sent': con_sent,
+        'con_friend': con_friend, 'test': test
     }
-    return render(request,'professionals_html.html',di)
+    return render(request, 'professionals_html.html', di)
 
-def manage_your_connection(request,action,u_id):
+
+def manage_your_connection(request, action, u_id):
     if not request.user.is_authenticated:
         return redirect('login')
     # print(action,u_id)
-    if action=="Send_Request":
-        sender_user=User.objects.get(username=request.user.username)
-        sender=UserDataBase.objects.get(usr=sender_user)
-        receiver=UserDataBase.objects.get(id=u_id)
-        Connections.objects.create(sender=sender,receiver=receiver)
-        return redirect('UserProfile',receiver.usr.username)
-    if action=='Accept_Request' or action == "Reject_Request":
+    if action == "Send_Request":
+        sender_user = User.objects.get(username=request.user.username)
+        sender = UserDataBase.objects.get(usr=sender_user)
+        receiver = UserDataBase.objects.get(id=u_id)
+        Connections.objects.create(sender=sender, receiver=receiver)
+        return redirect('UserProfile', receiver.usr.username)
+    if action == 'Accept_Request' or action == "Reject_Request":
         receive_user = User.objects.get(username=request.user.username)
         receiver = UserDataBase.objects.get(usr=receive_user)
         sender = UserDataBase.objects.get(id=u_id)
         con = Connections.objects.filter(sender=sender, receiver=receiver)
         if con:
             for c in con:
-                if action=="Accept_Request":
-                    c.status="friend"
+                if action == "Accept_Request":
+                    c.status = "friend"
                     c.save()
-                elif action=="Reject_Request":
-                    c.status="rejected"
+                elif action == "Reject_Request":
+                    c.status = "rejected"
                     c.save()
         return redirect('professional', "all")
 
-
-
-
     return HttpResponse("<h1>manage_your_connection</h1>")
+
 
 def Register_Company(request):
     if not request.user.is_authenticated:
         return redirect('login')
-    # loggedin_user = request.user.username
-    # if Username != loggedin_user:
-    #     return redirect("UserProfile", loggedin_user)
-    # usr = User.objects.filter(username=Username)
-    # usr = usr[0]
-    # User_Detail = UserDataBase.objects.get(usr=usr)
+    c_obj = Company_Model.objects.get(usr=request.user)
+    form = Register_Company_Form(request.POST or None, request.FILES or None, instance=c_obj)
+    if request.method == "POST":
+        # form = Register_Company_Form(request.POST, request.FILES)
+        if form.is_valid():
+            data = form.save(commit=False)
+            Map_str = data.map_embed
+            if 'width="600"' in Map_str:
+                t = Map_str.split('width="600"')
+                Map_str = 'width="100%"'.join(t)
+                data.map_embed = Map_str
 
-    form = RegisterCompany_Form(request.POST or None, request.FILES or None)
+            data.usr = request.user
+            data.save()
+            return redirect('login')
+    # print(special_dir(form))
 
-    di={'form':form}
-    return render(request,'register_company.html',di)
+    di = {'form': form}
+    return render(request, 'register_company.html', di)
 
 
+def company_details(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    usr = request.user
+    company = Company_Model.objects.filter(usr=usr)
+    if not company:
+        return redirect('login')
+    # print('debug:',company[0].name)
+    di = {'company': company.first()}
+
+    return render(request, 'companies-detail.html', di)
 
 
+def newpost(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    # blog_form = UserBlog_Form()
+    if request.method == "POST":
+        form = UserBlog_Form(request.POST)
+        if form.is_valid():
+            data=form.save(commit=False)
+            data.usr=request.user
+            data.save()
+            print('Debug: Blog Submitted') 
+    return redirect("login")
 
+# def special_dir(obj):
+#     li=dir(obj)
+#     # li=li.copy()
+#     for i in li.copy():
+#         if i[0]!='_':
+#             del i
+#     return obj

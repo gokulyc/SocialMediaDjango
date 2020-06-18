@@ -33,9 +33,9 @@ class Edit_User_Form(forms.ModelForm):
 
         }
 
-class RegisterCompany_Form(forms.ModelForm):
+class Register_Company_Form(forms.ModelForm):
     class Meta:
-        model = UserDataBase
+        model = Company_Model
         exclude = ("usr",)
         widgets = {
             "name":forms.TextInput(attrs={"class":"form-control", }),
@@ -45,5 +45,17 @@ class RegisterCompany_Form(forms.ModelForm):
             "website": forms.TextInput(attrs={"class": "form-control", }),
             "title": forms.TextInput(attrs={"class": "form-control", }),
             "address": forms.TextInput(attrs={"class": "form-control", }),
+            "map_embed": forms.Textarea(attrs={"class": "form-control", }),
+
+        }
+
+class UserBlog_Form(forms.ModelForm):
+    class Meta:
+        model = Blog_Model
+        exclude = ("usr",)
+        widgets = {
+            "title":forms.TextInput(attrs={"class":"form-control", }),
+            "blog":forms.Textarea(attrs={"class":"form-control", "placeholder":"Share your thoughts...!"}),
+            "ytd_video":forms.Textarea(attrs={"class":"form-control","onchange":"loadFile(event)" }),
 
         }

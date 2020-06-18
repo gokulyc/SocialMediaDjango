@@ -5,3 +5,5 @@ from . import models
 
 admin.site.register(models.UserDataBase)
 admin.site.register(models.Connections)
+admin.site.register(models.Company_Model)
+admin.site.register(models.Blog_Model)

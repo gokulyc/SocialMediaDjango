@@ -41,8 +41,10 @@
 
                 <h1>{{profile.name}}
                   {% if profile.usr.username == request.user.username %}
-                  <a " class="ml-3" href="{% url 'registercom' %}"
+
+                  <a  class="ml-3" href="{% url 'registercom' %}"
                     data-toggle="tooltip" data-placement="top" title="Register your company"><i style="font-size:21px;" class="fas fa-building"></i> </a>
+
                   {% endif %}
                   <a class="veri" href="" data-toggle="tooltip" data-placement="top"
                     title="Verified Member"> <i class="fa fa-check"></i> </a> </h1>
@@ -133,19 +135,18 @@
 
           <!-- Nav Tabs -->
           <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li><a class="nav-link active" data-toggle="tab" href="professional-details.html#about" role="tab"
+            <li><a class="nav-link active" data-toggle="tab" href="#about" role="tab"
                 aria-selected="true">About</a> </li>
-            <li><a class="nav-link" data-toggle="tab" href="professional-details.html#services" role="tab"
-                aria-selected="true">Services</a> </li>
-            <li><a class="nav-link" data-toggle="tab" href="professional-details.html#portfolio" role="tab"
+            <li><a class="nav-link" data-toggle="tab" href="#newpost" role="tab"
+                aria-selected="true">New Post</a> </li>
+            <li><a class="nav-link" data-toggle="tab" href="#portfolio" role="tab"
                 aria-selected="true">Portfolio</a> </li>
-            <li><a class="nav-link" data-toggle="tab" href="professional-details.html#contact" role="tab"
-                aria-selected="true">Contact</a> </li>
-            <li><a class="nav-link" data-toggle="tab" href="professional-details.html#support" role="tab"
+
+            <li><a class="nav-link" data-toggle="tab" href="#support" role="tab"
                 aria-selected="true">Support</a> </li>
-            <li><a class="nav-link" data-toggle="tab" href="professional-details.html#folow" role="tab"
+            <li><a class="nav-link" data-toggle="tab" href="#folow" role="tab"
                 aria-selected="true">Followers<small>(6)</small></a> </li>
-            <li><a class="nav-link" data-toggle="tab" href="professional-details.html#folowng" role="tab"
+            <li><a class="nav-link" data-toggle="tab" href="#folowng" role="tab"
                 aria-selected="true">Following<small>(120)</small></a> </li>
           </ul>
           <div class="row">
@@ -610,32 +611,35 @@
                 <!-- Jobs -->
 
                 <!-- Contact -->
-                <div id="contact" class="tab-pane fade">
+                <div id="newpost" class="tab-pane fade">
                   <div class="profile-main">
-                    <h3>Contact the {{profile.name}}</h3>
+                    <h3>Welcome {{profile.name}} !!! , Create new post in blog...</h3>
                     <div class="profile-in">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate quis tenetur velit!
-                        Provident eum molestias aperiam suscipit distinctio ipsum cupiditate quasi, dolor sunt, cum
-                        reprehenderit quibusdam, repellendus eaque, quas magni.</p>
-                      <form action="#" class="contact-company">
+                      <p>Create new post in blog and share your thoughts ... </p>
+                      <form action="{% url 'newblogpost' %}" method="post" class="contact-company">
+                        {% csrf_token %}
                         <ul class="row">
-                          <li class="col-sm-6">
-                            <input type="text" placeholder="Full Name " class="form-control">
-                          </li>
-                          <li class="col-sm-6">
-                            <input type="text" placeholder="E-mail address" class="form-control">
-                          </li>
-                          <li class="col-sm-6">
-                            <input type="text" placeholder="Phone Number" class="form-control">
-                          </li>
-                          <li class="col-sm-6">
-                            <input type="text" placeholder="Subject" class="form-control">
+                          <li class="col-sm-12">
+                             Title *
+                            {{blog_form.title}}
+
                           </li>
                           <li class="col-sm-12">
-                            <textarea placeholder="Your Message" class="form-control"></textarea>
+
+
+                             {{blog_form.blog}}
+
                           </li>
+                          <li class="col-sm-12">
+                            <div>
+                             Youtube embed code *
+                             {{blog_form.ytd_video}}
+                              </div>
+
+                          </li>
+
                         </ul>
-                        <button class="btn">Send message</button>
+                        <button class="btn" type="submit">Create Post</button>
                       </form>
                     </div>
                   </div>
