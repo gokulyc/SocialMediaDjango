@@ -61,3 +61,10 @@ class Blog_Model(models.Model):
 
     def __str__(self):
         return self.title
+
+class Post_Likes(models.Model):
+    usr=models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True)
+    blog=models.ForeignKey(Blog_Model,on_delete=models.CASCADE,blank=True,null=True)
+
+    def __str__(self):
+        return self.blog.title+'-'+self.usr.username

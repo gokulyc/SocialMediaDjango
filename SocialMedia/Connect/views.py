@@ -74,7 +74,37 @@ def UserProfile(request, Username):
     User_Detail = UserDataBase.objects.get(usr=usr)
     # print(User_Detail)
     blog_form = UserBlog_Form()
-    return render(request, "user_details.html", {'profile': User_Detail, 'connection': connection,'blog_form':blog_form})
+
+    all_posts=Blog_Model.objects.filter(usr=usr).order_by('-date')
+
+    all_posts_like_luser=Post_Likes.objects.filter(usr=request.user)
+    like_luser_bids=[]
+    for i in all_posts_like_luser:
+        like_luser_bids.append(i.blog.id)
+
+    # print('Debug: ',all_posts[0].post_likes_set.all(),all_posts[1].post_likes_set.all())
+    # print('Debug: ',dir(all_posts[0]))
+
+    di={'profile': User_Detail,
+        'connection': connection,
+        'blog_form':blog_form,
+        'all_posts':all_posts,
+        'like_luser_bids':like_luser_bids,
+        }
+
+    return render(request, "user_details.html", di)
+
+def like_post(request,b_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    blog=Blog_Model.objects.get(id=b_id)
+    Post_Likes.objects.create(usr=request.user,blog=blog)
+    uname=blog.usr.username
+
+    return redirect("UserProfile",uname)
+
+
 
 
 def Update_User_Details(request, Username):

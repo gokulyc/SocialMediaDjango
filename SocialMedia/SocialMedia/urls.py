@@ -33,6 +33,8 @@ urlpatterns = [
     path('connection/<str:action>/<int:u_id>/', cview.manage_your_connection, name = "connections"),
     path('register/company/', cview.Register_Company, name = "registercom"),
     path('company_details/', cview.company_details, name = "company_details"),
+
     path('post_new_blog/', cview.newpost, name = "newblogpost"),
+    path('like_post/<int:b_id>/', cview.like_post, name = "likepost"),
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

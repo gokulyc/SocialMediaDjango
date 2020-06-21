@@ -70,7 +70,13 @@
                   <a href="mailto:{% url profile.email}}"><i class="far fa-envelope"></i> </a>
                   {%endif%}
                   {% if profile.usr.username != request.user.username %}
-                    {% if connection %}
+                    {% if connection.status == 'friend' %}
+                  <a  class="float-right margin-right-0"
+                    data-toggle="tooltip" data-placement="top" title="Friend"><i style="color:blue;" class="fas fa-user-plus"></i> </a>
+
+                  {% elif connection.status == 'Sent' %}
+                   <a  class="float-right margin-right-0"
+                    data-toggle="tooltip" data-placement="top" title="Pending"><i class="fas fa-user-plus"></i> </a>
 
                     {%else%}
                   <a href=" {% url 'connections' 'Send_Request' profile.id %}" class="float-right margin-right-0"
@@ -135,10 +141,12 @@
 
           <!-- Nav Tabs -->
           <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li><a class="nav-link active" data-toggle="tab" href="#about" role="tab"
+            <li><a class="nav-link active" data-toggle="tab" href="#blogposts" role="tab"
                 aria-selected="true">About</a> </li>
+            {% if profile.usr.username == request.user.username %}
             <li><a class="nav-link" data-toggle="tab" href="#newpost" role="tab"
                 aria-selected="true">New Post</a> </li>
+            {% endif %}
             <li><a class="nav-link" data-toggle="tab" href="#portfolio" role="tab"
                 aria-selected="true">Portfolio</a> </li>
 
@@ -276,85 +284,30 @@
             <div class="col-lg-8">
               <div class="tab-content">
 
-                <!-- About Company -->
-                <div id="about" class="tab-pane fade show active">
-                  <div class="profile-main">
-                    <h3>About the Professionals</h3>
-                    <div class="profile-in">
-                      <p>{{profile.about}}</p>
+                <!-- blog posts -->
+                 <div id="blogposts" class="tab-pane fade show active" style="height:800px;overflow-y:scroll">
+                   {% for post in all_posts %}
+                    <div class="profile-main">
+                      <h2 class="ml-2 p-2">{{post.title}}</h2>
+                      <div class="profile-in">
 
-                      <!-- Progress Skills -->
-                      <div class="skills">
+                        <p>{{post.blog}}</p>
 
-                        <!-- SKILLS BAR Style -->
-                        <div class="progress-bars style-2">
+                        <!-- Video -->
+                        {{post.ytd_video | safe}}
+                        {% if post.id not in like_luser_bids %}
+                        <span aria-label="Like"><a href="{% url 'likepost' post.id %}"><i style="color:blue;" class="far fa-thumbs-up"></i></a></span>
+                        {% else %}
+                        <span class="ml-3" aria-label="Unlike"><i style="color:red;" class="far fa-thumbs-up"></i></span>
+                        {% endif %}
+                        <span class="ml-2">({{post.post_likes_set.all.count}})</span>
 
-                          <!-- Photoshop -->
-                          <div class="bar">
-                            <p>Photoshop </p>
-                            <span class="progress-bar-tooltip caret-down">95%</span>
-                            <div class="progress" data-percent="95%">
-                              <div class="progress-bar"> </div>
-                            </div>
-                          </div>
 
-                          <!-- ILLUSTRATOR -->
-                          <div class="bar">
-                            <p>ILLUSTRATOR</p>
-                            <span class="progress-bar-tooltip caret-down">75%</span>
-                            <div class="progress" data-percent="75%">
-                              <div class="progress-bar progress-bar-primary"> </div>
-                            </div>
-                          </div>
-
-                          <!-- DESIGN -->
-                          <div class="bar">
-                            <p>html 5 / css</p>
-                            <span class="progress-bar-tooltip caret-down">80%</span>
-                            <div class="progress" data-percent="80%">
-                              <div class="progress-bar progress-bar-primary"> </div>
-                            </div>
-                          </div>
-
-                          <!-- DESIGN -->
-                          <div class="bar">
-                            <p>UX/UI DeSIGN</p>
-                            <span class="progress-bar-tooltip caret-down">90%</span>
-                            <div class="progress" data-percent="90%">
-                              <div class="progress-bar progress-bar-primary"> </div>
-                            </div>
-                          </div>
-                        </div>
                       </div>
 
-                      <!-- Some Facts -->
-                      <div class="dev-activ text-center padding-bottom-20 margin-top-50">
-                        <ul class="row">
-                          <li class="col">
-                            <div class="icon"> <i class="flaticon-resume"></i> </div>
-                            <span><span class="counter">542</span>+</span>
-                            <p>Jobs Completed</p>
-                          </li>
-                          <li class="col">
-                            <div class="icon"> <i class="flaticon-group"></i></div>
-                            <span><span class="counter">1850</span></span>
-                            <p>Work with Companies</p>
-                          </li>
-                          <li class="col">
-                            <div class="icon"><i class="flaticon-happiness"></i></div>
-                            <span><span class="counter">45057</span>+</span>
-                            <p>Happy clients</p>
-                          </li>
-                          <li class="col">
-                            <div class="icon"><i class="flaticon-award"></i></div>
-                            <span class="counter">80</span>
-                            <p>Awards</p>
-                          </li>
-                        </ul>
-                      </div>
                     </div>
+                   {% endfor %}
                   </div>
-                </div>
                 <div id="services" class="tab-pane fade">
                   <div class="profile-main">
                     <h3>Services</h3>
@@ -610,7 +563,8 @@
 
                 <!-- Jobs -->
 
-                <!-- Contact -->
+                <!-- New Post -->
+                {% if profile.usr.username == request.user.username %}
                 <div id="newpost" class="tab-pane fade">
                   <div class="profile-main">
                     <h3>Welcome {{profile.name}} !!! , Create new post in blog...</h3>
@@ -625,10 +579,7 @@
 
                           </li>
                           <li class="col-sm-12">
-
-
                              {{blog_form.blog}}
-
                           </li>
                           <li class="col-sm-12">
                             <div>
@@ -644,6 +595,7 @@
                     </div>
                   </div>
                 </div>
+                {% endif %}
 
                 <!-- Support -->
                 <div id="support" class="tab-pane fade">
@@ -651,7 +603,7 @@
                     <h3>Support</h3>
                     <div class="profile-in"> </div>
                   </div>
-                </div>
+                </div> 
 
                 <!-- Follows -->
                 <div id="folow" class="tab-pane fade">
