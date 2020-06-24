@@ -21,20 +21,25 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', cview.Login, name = "login"),
-    path('Register/', cview.Register, name = "register"),
-    path('in/<str:Username>/', cview.UserProfile, name = "UserProfile"),
-    path('in/edit/<str:Username>/', cview.Update_User_Details, name = "EditUserProfile"),
+    path('', cview.Login, name="login"),
+    path('Register/', cview.Register, name="register"),
+    path('in/<str:Username>/', cview.UserProfile, name="UserProfile"),
+    path('in/edit/<str:Username>/',
+         cview.Update_User_Details, name="EditUserProfile"),
     path('logout/', cview.logout_page, name="logoutpage"),
 
 
-    path('all_professional/<str:d_type>/', cview.all_profession, name = "professional"),
-    path('all_professional_html/<str:d_type>/', cview.all_profession_html, name = "pro_html"),
-    path('connection/<str:action>/<int:u_id>/', cview.manage_your_connection, name = "connections"),
-    path('register/company/', cview.Register_Company, name = "registercom"),
-    path('company_details/', cview.company_details, name = "company_details"),
+    path('all_professional/<str:d_type>/',
+         cview.all_profession, name="professional"),
+    path('all_professional_html/<str:d_type>/',
+         cview.all_profession_html, name="pro_html"),
+    path('connection/<str:action>/<int:u_id>/',
+         cview.manage_your_connection, name="connections"),
+    path('register/company/', cview.Register_Company, name="registercom"),
+    path('company_details/', cview.company_details, name="company_details"),
 
-    path('post_new_blog/', cview.newpost, name = "newblogpost"),
-    path('like_post/<int:b_id>/', cview.like_post, name = "likepost"),
+    path('post_new_blog/', cview.newpost, name="newblogpost"),
+    path('like_post/<int:b_id>/', cview.like_post, name="likepost"),
+    path('unlike_post/<int:b_id>/', cview.unlike_post, name="unlikepost"),
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

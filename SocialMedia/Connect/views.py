@@ -5,7 +5,23 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from .forms import *
 
+from django.core.mail import send_mail, EmailMultiAlternatives
+from django.template.loader import get_template
+from django.conf import settings
+
 from django.db.models import Q
+
+from SocialMedia.tasks import send_email_users
+
+
+
+# def send_email_users(email_li, msg):
+#     from_email = settings.EMAIL_HOST_USER
+#     to_email = email_li
+#     html = get_template("mail.html").render({'msg': msg})
+#     # html = f'<h1>{msg}</h1>'
+#     sub = 'Django test mail'
+#     send_mail(sub, "", from_email, to_email, html_message=html)
 
 
 def Login(request):
@@ -34,19 +50,34 @@ def logout_page(request):
 
 
 def Register(request):
+    form = AddUser_Form(request.POST or None, request.FILES or None)
+    error = ''
     if request.method == "POST":
-        form = AddUser_Form(request.POST, request.FILES)
+        # form = AddUser_Form(request.POST, request.FILES)
         if form.is_valid():
             data = form.save(commit=False)
             un = request.POST["un"]
             ps = request.POST["ps"]
             email = data.email
+            conpwd = request.POST["pwdconfirm"]
 
-            usr = User.objects.create_user(un, email, ps)
-            data.usr = usr
-            data.save()
-            return redirect("login")
-    return HttpResponse("Register Your Self")
+            existing_users = (user.username for user in User.objects.all())
+            # print(existing_users)
+            if ps != conpwd:
+                error = "Passwords not matching ..!!"
+            elif un in existing_users:
+                print(list(User.objects.all()))
+                error = "Username already exists !!!"
+            elif error == '':
+                usr = User.objects.create_user(un, email, ps)
+                data.usr = usr
+                data.save()
+                return redirect("login")
+            else:
+                pass
+            # return redirect("login")
+    Dict = {"form": form, 'error': error}
+    return render(request, "login_register.html", Dict)
 
 
 def UserProfile(request, Username):
@@ -64,7 +95,8 @@ def UserProfile(request, Username):
         UData1 = UserDataBase.objects.get(usr=user1)
         UData2 = UserDataBase.objects.get(usr=user2)
 
-        connection = Connections.objects.filter(Q(sender=UData1, receiver=UData2) | Q(sender=UData2, receiver=UData1))
+        connection = Connections.objects.filter(
+            Q(sender=UData1, receiver=UData2) | Q(sender=UData2, receiver=UData1))
 
         if len(connection) != 0:
             # print(connection)
@@ -75,36 +107,51 @@ def UserProfile(request, Username):
     # print(User_Detail)
     blog_form = UserBlog_Form()
 
-    all_posts=Blog_Model.objects.filter(usr=usr).order_by('-date')
+    all_posts = Blog_Model.objects.filter(usr=usr).order_by('-date')
 
-    all_posts_like_luser=Post_Likes.objects.filter(usr=request.user)
-    like_luser_bids=[]
+    all_posts_like_luser = Post_Likes.objects.filter(usr=request.user)
+    like_luser_bids = []
     for i in all_posts_like_luser:
         like_luser_bids.append(i.blog.id)
 
     # print('Debug: ',all_posts[0].post_likes_set.all(),all_posts[1].post_likes_set.all())
     # print('Debug: ',dir(all_posts[0]))
 
-    di={'profile': User_Detail,
-        'connection': connection,
-        'blog_form':blog_form,
-        'all_posts':all_posts,
-        'like_luser_bids':like_luser_bids,
-        }
+    di = {'profile': User_Detail,
+          'connection': connection,
+          'blog_form': blog_form,
+          'all_posts': all_posts,
+          'like_luser_bids': like_luser_bids,
+          }
 
     return render(request, "user_details.html", di)
 
-def like_post(request,b_id):
+
+def like_post(request, b_id):
     if not request.user.is_authenticated:
         return redirect('login')
 
-    blog=Blog_Model.objects.get(id=b_id)
-    Post_Likes.objects.create(usr=request.user,blog=blog)
-    uname=blog.usr.username
+    blog = Blog_Model.objects.get(id=b_id)
+    # Post_Likes.objects.create(usr=request.user, blog=blog)
+    uname = blog.usr.username
+    msg = f'{uname} post was liked,{blog.blog}'
+    send_email_users.delay(['chaitanya1157@gmail.com', 'gokulyc@gmail.com'], msg)
 
-    return redirect("UserProfile",uname)
+    return redirect("UserProfile", uname)
 
 
+def unlike_post(request, b_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    blog = Blog_Model.objects.get(id=b_id)
+    uname = blog.usr.username
+    Post_Likes.objects.delete(Q(usr=request.user, blog=blog))
+
+    # msg = f'{uname} post was liked,{blog.blog}'
+    # send_email_users(['chaitanya1157@gmail.com', 'gokulyc@gmail.com'])
+
+    return redirect("UserProfile", uname)
 
 
 def Update_User_Details(request, Username):
@@ -116,7 +163,8 @@ def Update_User_Details(request, Username):
     usr = User.objects.filter(username=Username)
     usr = usr[0]
     User_Detail = UserDataBase.objects.get(usr=usr)
-    form = Edit_User_Form(request.POST or None, request.FILES or None, instance=User_Detail)
+    form = Edit_User_Form(request.POST or None,
+                          request.FILES or None, instance=User_Detail)
 
     if form.is_valid():
         form.save()
@@ -297,7 +345,8 @@ def Register_Company(request):
     if not request.user.is_authenticated:
         return redirect('login')
     c_obj = Company_Model.objects.get(usr=request.user)
-    form = Register_Company_Form(request.POST or None, request.FILES or None, instance=c_obj)
+    form = Register_Company_Form(
+        request.POST or None, request.FILES or None, instance=c_obj)
     if request.method == "POST":
         # form = Register_Company_Form(request.POST, request.FILES)
         if form.is_valid():
@@ -337,10 +386,10 @@ def newpost(request):
     if request.method == "POST":
         form = UserBlog_Form(request.POST)
         if form.is_valid():
-            data=form.save(commit=False)
-            data.usr=request.user
+            data = form.save(commit=False)
+            data.usr = request.user
             data.save()
-            print('Debug: Blog Submitted') 
+            print('Debug: Blog Submitted')
     return redirect("login")
 
 # def special_dir(obj):

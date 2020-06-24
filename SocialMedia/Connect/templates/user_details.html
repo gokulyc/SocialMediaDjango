@@ -42,12 +42,12 @@
                 <h1>{{profile.name}}
                   {% if profile.usr.username == request.user.username %}
 
-                  <a  class="ml-3" href="{% url 'registercom' %}"
-                    data-toggle="tooltip" data-placement="top" title="Register your company"><i style="font-size:21px;" class="fas fa-building"></i> </a>
+                  <a class="ml-3" href="{% url 'registercom' %}" data-toggle="tooltip" data-placement="top"
+                    title="Register your company"><i style="font-size:21px;" class="fas fa-building"></i> </a>
 
                   {% endif %}
-                  <a class="veri" href="" data-toggle="tooltip" data-placement="top"
-                    title="Verified Member"> <i class="fa fa-check"></i> </a> </h1>
+                  <a class="veri" href="" data-toggle="tooltip" data-placement="top" title="Verified Member"> <i
+                      class="fa fa-check"></i> </a> </h1>
                 <h6>{{profile.title}}</h6>
                 <div class="social-links">
 
@@ -71,14 +71,14 @@
                   {%endif%}
                   {% if profile.usr.username != request.user.username %}
                     {% if connection.status == 'friend' %}
-                  <a  class="float-right margin-right-0"
-                    data-toggle="tooltip" data-placement="top" title="Friend"><i style="color:blue;" class="fas fa-user-plus"></i> </a>
+                  <a  class=" float-right margin-right-0" data-toggle="tooltip" data-placement="top" title="Friend"><i
+                      style="color:blue;" class="fas fa-user-plus"></i> </a>
 
                   {% elif connection.status == 'Sent' %}
-                   <a  class="float-right margin-right-0"
-                    data-toggle="tooltip" data-placement="top" title="Pending"><i class="fas fa-user-plus"></i> </a>
+                  <a class="float-right margin-right-0" data-toggle="tooltip" data-placement="top" title="Pending"><i
+                      class="fas fa-user-plus"></i> </a>
 
-                    {%else%}
+                  {%else%}
                   <a href=" {% url 'connections' 'Send_Request' profile.id %}" class="float-right margin-right-0"
                     data-toggle="tooltip" data-placement="top" title="Follow"><i class="fas fa-user-plus"></i> </a>
                   {% endif %}
@@ -141,17 +141,15 @@
 
           <!-- Nav Tabs -->
           <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li><a class="nav-link active" data-toggle="tab" href="#blogposts" role="tab"
-                aria-selected="true">About</a> </li>
+            <li><a class="nav-link active" data-toggle="tab" href="#blogposts" role="tab" aria-selected="true">About</a>
+            </li>
             {% if profile.usr.username == request.user.username %}
-            <li><a class="nav-link" data-toggle="tab" href="#newpost" role="tab"
-                aria-selected="true">New Post</a> </li>
+            <li><a class="nav-link" data-toggle="tab" href="#newpost" role="tab" aria-selected="true">New Post</a> </li>
             {% endif %}
-            <li><a class="nav-link" data-toggle="tab" href="#portfolio" role="tab"
-                aria-selected="true">Portfolio</a> </li>
+            <li><a class="nav-link" data-toggle="tab" href="#portfolio" role="tab" aria-selected="true">Portfolio</a>
+            </li>
 
-            <li><a class="nav-link" data-toggle="tab" href="#support" role="tab"
-                aria-selected="true">Support</a> </li>
+            <li><a class="nav-link" data-toggle="tab" href="#support" role="tab" aria-selected="true">Support</a> </li>
             <li><a class="nav-link" data-toggle="tab" href="#folow" role="tab"
                 aria-selected="true">Followers<small>(6)</small></a> </li>
             <li><a class="nav-link" data-toggle="tab" href="#folowng" role="tab"
@@ -285,29 +283,31 @@
               <div class="tab-content">
 
                 <!-- blog posts -->
-                 <div id="blogposts" class="tab-pane fade show active" style="height:800px;overflow-y:scroll">
-                   {% for post in all_posts %}
-                    <div class="profile-main">
-                      <h2 class="ml-2 p-2">{{post.title}}</h2>
-                      <div class="profile-in">
+                <div id="blogposts" class="tab-pane fade show active" style="height:800px;overflow-y:scroll">
+                  {% for post in all_posts %}
+                  <div class="profile-main">
+                    <h2 class="ml-2 p-2">{{post.title}}</h2>
+                    <div class="profile-in">
 
-                        <p>{{post.blog}}</p>
+                      <p>{{post.blog}}</p>
 
-                        <!-- Video -->
-                        {{post.ytd_video | safe}}
-                        {% if post.id not in like_luser_bids %}
-                        <span aria-label="Like"><a href="{% url 'likepost' post.id %}"><i style="color:blue;" class="far fa-thumbs-up"></i></a></span>
-                        {% else %}
-                        <span class="ml-3" aria-label="Unlike"><i style="color:red;" class="far fa-thumbs-up"></i></span>
-                        {% endif %}
-                        <span class="ml-2">({{post.post_likes_set.all.count}})</span>
+                      <!-- Video -->
+                      {{post.ytd_video | safe}}
+                      {% if post.id not in like_luser_bids %}
+                      <span aria-label="Like"><a href="{% url 'likepost' post.id %}"><i style="color:blue;"
+                            class="far fa-thumbs-up"></i></a></span>
+                      {% else %}
+                      <span class="ml-3" aria-label="Unlike"><a href="{% url 'unlikepost' post.id %}"></a><i
+                          style="color:red;" class="far fa-thumbs-up"></i></a></span>
+                      {% endif %}
+                      <span class="ml-2">({{post.post_likes_set.all.count}})</span>
 
-
-                      </div>
 
                     </div>
-                   {% endfor %}
+
                   </div>
+                  {% endfor %}
+                </div>
                 <div id="services" class="tab-pane fade">
                   <div class="profile-main">
                     <h3>Services</h3>
@@ -574,18 +574,18 @@
                         {% csrf_token %}
                         <ul class="row">
                           <li class="col-sm-12">
-                             Title *
+                            Title *
                             {{blog_form.title}}
 
                           </li>
                           <li class="col-sm-12">
-                             {{blog_form.blog}}
+                            {{blog_form.blog}}
                           </li>
                           <li class="col-sm-12">
                             <div>
-                             Youtube embed code *
-                             {{blog_form.ytd_video}}
-                              </div>
+                              Youtube embed code *
+                              {{blog_form.ytd_video}}
+                            </div>
 
                           </li>
 
@@ -603,7 +603,7 @@
                     <h3>Support</h3>
                     <div class="profile-in"> </div>
                   </div>
-                </div> 
+                </div>
 
                 <!-- Follows -->
                 <div id="folow" class="tab-pane fade">
