@@ -297,8 +297,8 @@
                       <span aria-label="Like"><a href="{% url 'likepost' post.id %}"><i style="color:blue;"
                             class="far fa-thumbs-up"></i></a></span>
                       {% else %}
-                      <span class="ml-3" aria-label="Unlike"><a href="{% url 'unlikepost' post.id %}"></a><i
-                          style="color:red;" class="far fa-thumbs-up"></i></a></span>
+                      <span class="ml-3" aria-label="Unlike"><a href="{% url 'unlikepost' post.id %}"><i
+                            style="color:red;" class="far fa-thumbs-up"></i></a></span>
                       {% endif %}
                       <span class="ml-2">({{post.post_likes_set.all.count}})</span>
 

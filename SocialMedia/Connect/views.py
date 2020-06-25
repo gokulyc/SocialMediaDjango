@@ -14,7 +14,6 @@ from django.db.models import Q
 from SocialMedia.tasks import send_email_users
 
 
-
 # def send_email_users(email_li, msg):
 #     from_email = settings.EMAIL_HOST_USER
 #     to_email = email_li
@@ -132,10 +131,11 @@ def like_post(request, b_id):
         return redirect('login')
 
     blog = Blog_Model.objects.get(id=b_id)
-    # Post_Likes.objects.create(usr=request.user, blog=blog)
+    Post_Likes.objects.create(usr=request.user, blog=blog)
     uname = blog.usr.username
-    msg = f'{uname} post was liked,{blog.blog}'
-    send_email_users.delay(['chaitanya1157@gmail.com', 'gokulyc@gmail.com'], msg)
+    # msg = f'{uname} post was liked,{blog.blog}'
+    # send_email_users.delay(
+    #     ['chaitanya1157@gmail.com', 'gokulyc@gmail.com'], msg)
 
     return redirect("UserProfile", uname)
 
@@ -146,8 +146,8 @@ def unlike_post(request, b_id):
 
     blog = Blog_Model.objects.get(id=b_id)
     uname = blog.usr.username
-    Post_Likes.objects.delete(Q(usr=request.user, blog=blog))
-
+    obj = Post_Likes.objects.filter(Q(usr=request.user, blog=blog))
+    obj.delete()
     # msg = f'{uname} post was liked,{blog.blog}'
     # send_email_users(['chaitanya1157@gmail.com', 'gokulyc@gmail.com'])
 
